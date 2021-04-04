@@ -19,6 +19,9 @@ class LaravelBalanceServiceProvider extends ServiceProvider
               __DIR__.'/../config/config.php' => config_path('laravelBalance.php'),
             ], 'config');
         
-          }
+        }
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
     }
 }
