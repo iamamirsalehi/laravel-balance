@@ -1,0 +1,17 @@
+{
+    "name": "iamamirsalehi/laravel-balance",
+    "description": "Manage your users balance in your website ",
+    "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "Amir Salehi",
+        "email": "iamamirsalehi@gmail.com"
+    }],
+    "require": {},
+
+    "autoload": {
+        "psr-4": {
+            "Iamamirsalehi\\LaravelBalance\\": "src/"
+        }
+    }
+}
