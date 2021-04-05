@@ -15,7 +15,7 @@ class BalanceService
         $providers_base_namespace = "Iamamirsalehi\\LaravelBalance\\Services\\Balance\\Providers\\";
 
         if(class_exists($providers_base_namespace . $requested_class))
-            return (new ($providers_base_namespace . $requested_class));
+            return (new ($providers_base_namespace . $requested_class)($arguments));
 
         throw new ActionNotFoundException($name . ' action not found, please call an existing action');
     }

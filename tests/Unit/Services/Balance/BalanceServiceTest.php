@@ -19,13 +19,17 @@ class BalanceServiceTest extends TestCase
 {
     public function test_if_user_can_call_actions_by_static_call()
     {
-        $deposit                = BalanceService::deposit();
-        $cancelOrder            = BalanceService::cancelOrder();
-        $executeOrder           = BalanceService::executeOrder();
-        $pendingOrder           = BalanceService::pendingOrder();
-        $rejectedOrder          = BalanceService::rejectedWithraw();
-        $withdrawConfirmed      = BalanceService::withdrawConfirmed();
-        $withdrawUnconfirmedYet = BalanceService::withdrawUnconfirmedYet();
+        $data = [
+            'test'
+        ];
+
+        $deposit                = BalanceService::deposit($data);
+        $cancelOrder            = BalanceService::cancelOrder($data);
+        $executeOrder           = BalanceService::executeOrder($data);
+        $pendingOrder           = BalanceService::pendingOrder($data);
+        $rejectedOrder          = BalanceService::rejectedWithraw($data);
+        $withdrawConfirmed      = BalanceService::withdrawConfirmed($data);
+        $withdrawUnconfirmedYet = BalanceService::withdrawUnconfirmedYet($data);
 
         $this->assertInstanceOf(Deposit::class, $deposit);
         $this->assertInstanceOf(CancelOrder::class, $cancelOrder);

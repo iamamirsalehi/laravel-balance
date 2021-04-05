@@ -2,7 +2,12 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
-class PendingOrder
-{
+use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
+class PendingOrder extends BalanceInterface
+{
+    public function handle()
+    {
+        // TODO: Implement handle() method.
+    }
 }

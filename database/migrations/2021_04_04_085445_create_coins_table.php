@@ -15,10 +15,12 @@ class CreateCoinsTable extends Migration
     {
         Schema::create('coins', function (Blueprint $table) {
             $table->id();
-            $table->char('coin_persian_name', 60);
-            $table->char('coin_english_name', 40);
-            $table->text('notice', 1000)->nullable();
-            $table->char('website')->nullable();
+            $table->char('coin_persian_name', 64);
+            $table->char('coin_english_name', 64);
+            $table->text('coin_notice', 1024)->nullable();
+            $table->char('coin_website')->nullable();
+            $table->json('coin_tags')->nullable();
+            $table->tinyInteger('coin_is_');
             $table->timestamps();
         });
     }

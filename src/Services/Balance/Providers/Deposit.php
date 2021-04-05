@@ -2,7 +2,12 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
-class Deposit
+use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
+
+class Deposit extends BalanceInterface
 {
-    
+    public function handle()
+    {
+
+    }
 }

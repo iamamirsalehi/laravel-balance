@@ -21,7 +21,7 @@ class CreateBalancesTable extends Migration
             $table->char('actionable_type');
 
             $table->float('balance_action_asset');
-            $table->float('balance_asset');            // totoal balance
+            $table->float('balance_asset');            // total balance
             $table->float('balance_action_liability'); // blocked balance
             $table->float('balance_equity');           // free balance
 

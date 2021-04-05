@@ -2,7 +2,12 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
-class RejectedWithraw
-{
+use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
+class RejectedWithraw extends BalanceInterface
+{
+    public function handle()
+    {
+        // TODO: Implement handle() method.
+    }
 }

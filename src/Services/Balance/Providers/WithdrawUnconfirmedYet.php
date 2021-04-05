@@ -2,7 +2,12 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
-class WithdrawUnconfirmedYet
-{
+use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
+class WithdrawUnconfirmedYet extends BalanceInterface
+{
+    public function handle()
+    {
+        // TODO: Implement handle() method.
+    }
 }
