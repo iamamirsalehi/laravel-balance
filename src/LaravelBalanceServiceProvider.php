@@ -2,12 +2,17 @@
 
 namespace Iamamirsalehi\LaravelBalance;
 
+use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
 use Illuminate\Support\ServiceProvider;
 
 class LaravelBalanceServiceProvider extends ServiceProvider
 {
     public function register()
     {
+//        $this->app->bind('balance', function($app) {
+//            return new BalanceService();
+//        });
+
         $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'laravelBalance');
     }
 

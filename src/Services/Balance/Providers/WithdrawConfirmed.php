@@ -1,6 +1,6 @@
 <?php
 
-namespace Iamamirsaleho\LaravelBalance\Services\Balance\Providers;
+namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 class WithdrawConfirmed
 {
