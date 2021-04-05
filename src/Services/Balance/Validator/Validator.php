@@ -41,7 +41,7 @@ class Validator
         return resolve($this->data['repository']);
     }
 
-    public function getCoinType()
+    public function getCoinId()
     {
         if(!array_key_exists('coin_id', $this->data))
             throw new CoinIdMustBeExistedInTheData('Coin id must be existed in the data');
