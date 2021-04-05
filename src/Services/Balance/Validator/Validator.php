@@ -4,9 +4,10 @@
 namespace Iamamirsalehi\LaravelBalance\src\Services\Balance\Validator;
 
 
+use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\CoinIdMustBeExistedInTheData;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\RepositoryMustBeExistedInTheDataException;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\UserIdMustBeExistedInDataException;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\UserIdMustBeIntegerException;
+use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\IdMustBeIntegerException;
 use Illuminate\Database\Eloquent\Model;
 
 class Validator
@@ -24,7 +25,7 @@ class Validator
             throw new UserIdMustBeExistedInDataException('User id must be existed in the data');
 
         if(!is_int($this->data['user_id']))
-            throw new UserIdMustBeIntegerException('User id must be an integer');
+            throw new IdMustBeIntegerException('User id must be an integer');
 
         return $this->data['user_id'];
     }
@@ -38,5 +39,16 @@ class Validator
             return (new $this->data['repository']);
 
         return resolve($this->data['repository']);
+    }
+
+    public function getCoinType()
+    {
+        if(!array_key_exists('coin_id', $this->data))
+            throw new CoinIdMustBeExistedInTheData('Coin id must be existed in the data');
+
+        if(!is_int($this->data['coin_id']))
+            throw new IdMustBeIntegerException('Coin id must be an integer');
+
+        return $this->data['coin_id'];
     }
 }

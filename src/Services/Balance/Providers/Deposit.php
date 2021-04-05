@@ -8,6 +8,6 @@ class Deposit extends BalanceInterface
 {
     public function handle()
     {
-        return $this->data->getRepository();
+        return $this->data->getCoinType();
     }
 }
