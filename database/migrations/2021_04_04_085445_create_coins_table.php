@@ -18,9 +18,10 @@ class CreateCoinsTable extends Migration
             $table->char('coin_persian_name', 64);
             $table->char('coin_english_name', 64);
             $table->text('coin_notice', 1024)->nullable();
-            $table->char('coin_website')->nullable();
+            $table->char('coin_website_link')->nullable();
             $table->json('coin_tags')->nullable();
-            $table->tinyInteger('coin_is_');
+            $table->char('coin_white_paper_link'. 256)->nullable();
+            $table->tinyInteger('coin_is_a_token')->default(0); // it can be a token or a coin
             $table->timestamps();
         });
     }
