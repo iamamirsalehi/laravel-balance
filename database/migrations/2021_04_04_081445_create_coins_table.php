@@ -20,7 +20,7 @@ class CreateCoinsTable extends Migration
             $table->text('coin_notice', 1024)->nullable();
             $table->char('coin_website_link')->nullable();
             $table->json('coin_tags')->nullable();
-            $table->char('coin_white_paper_link'. 256)->nullable();
+            $table->char('coin_white_paper_link')->nullable();
             $table->tinyInteger('coin_is_a_token')->default(0); // it can be a token or a coin
             $table->timestamps();
         });
