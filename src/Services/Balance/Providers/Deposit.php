@@ -19,27 +19,29 @@ class Deposit extends BalanceInterface
      */
     public function handle()
     {
-        $c = $this->data->getDepositPrice();          // C(n)
+        $balance_action_asset = $this->data->getDepositPrice();          // C(n)
 
-        $d =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
+        $balance_asset        =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        $asset = $c + $d?->balance_asset;              // D(n)
+        $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
+
+        $free_balance = $asset - $balance_asset->balance_liability;
 
         $data = [
             'balance_code'             => CodeGenerator::make(),
             'actionable_id'            => 1,
             'actionable_type'          => 'deposit',
-            'balance_action_asset'     => $c,
+            'balance_action_asset'     => $balance_action_asset,
             'balance_asset'            => $asset,
-            'balance_action_liability' => $d->balance_action_liability ?? 0,
-            'balance_liability'        => $d->balance_liability ?? 0,
-            'balance_equity'           => $d->balance_equity ?? 0,
+            'balance_action_liability' => 0,
+            'balance_liability'        => 0,
+            'balance_equity'           => $free_balance,
             'user_id'                  => $this->data->getUserId(),
             'coin_id'                  => $this->data->getCoinId(),
         ];
 
         $updated_asset = $this->storeUserBalance($data);
 
-        return $updated_asset ? true : false;
+        return $updated_asset ? ['tracking_code' => $updated_asset->balance_code] : false;
     }
 }

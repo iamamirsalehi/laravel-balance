@@ -20,33 +20,33 @@ class CancelOrder extends BalanceInterface
      */
     public function handle()
     {
-        $cancel_order =  $this->getTheLastBalanceRecordOfUser(); //  F(n-1)
+        $balance_action_liability = $this->data->getCancelOrderPrice(); // E(n)
 
-        $balance_action_liability = $this->data->getCancelOrderPrice();
+        $balance_liability =  $this->getTheLastBalanceRecordOfUser();   //  F(n-1)
 
-        $this->checkIfBalanceHasActionLiability($balance_action_liability, $cancel_order->balance_liability);
+        $this->checkIfActionLiabilityIsLowerThanLiability($balance_action_liability, $balance_liability->balance_liability);
 
-        $liability = $cancel_order->balance_liability + $balance_action_liability;
+        $liability = $balance_liability->balance_liability + $balance_action_liability; // F(n)
 
         $data = [
             'balance_code'             => CodeGenerator::make(),
             'actionable_id'            => 9,
             'actionable_type'          => 'cancel_order',
             'balance_action_asset'     => 0,
-            'balance_asset'            => $cancel_order->balance_asset,
+            'balance_asset'            => $balance_liability->balance_asset,
             'balance_action_liability' => $balance_action_liability,
             'balance_liability'        => $liability,
-            'balance_equity'           => $cancel_order->balance_equity,
+            'balance_equity'           => $balance_liability->balance_equity,
             'user_id'                  => $this->data->getUserId(),
             'coin_id'                  => $this->data->getCoinId(),
         ];
 
         $canceled_order = $this->storeUserBalance($data);
 
-        return $canceled_order ? true : false;
+        return $canceled_order ? ['tracking_code' => $canceled_order->balance_code] : false;
     }
 
-    private function checkIfBalanceHasActionLiability(int $action_liability, int $liability)
+    private function checkIfActionLiabilityIsLowerThanLiability(int $action_liability, int $liability)
     {
         $action_liability = $action_liability * -1;
 
