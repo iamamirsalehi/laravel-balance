@@ -31,11 +31,11 @@ abstract class BalanceInterface
         return $last_balance_record_of_user;
     }
 
-    public function increaseUserAsset(array $data)
+    public function storeUserBalance(array $data)
     {
-        $last_balance_record_of_user = $this->balance_repository->store($data);
+        $last_balance_record_of_user = $this->balance_repository->create($data);
 
-
+        return $last_balance_record_of_user;
     }
 
     abstract public function handle();
