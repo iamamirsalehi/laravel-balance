@@ -18,14 +18,8 @@ class Validator
 {
     private $data;
 
-    private $coin_repository;
-
     public function __construct(array $data)
     {
-        $this->coin_repository = Coin::class;
-
-        $this->balance_repository = Balance::class;
-
         $this->data = $data;
     }
 
@@ -38,24 +32,6 @@ class Validator
             throw new IdMustBeIntegerException('User id must be an integer');
 
         return $this->data['user_id'];
-    }
-
-    public function getCoinRepository()
-    {
-        if(array_key_exists('coin_repository', $this->data))
-            if(!is_subclass_of($this->data['coin_repository'], Model::class))
-                return resolve($this->data['coin_repository']);
-
-        return resolve($this->coin_repository);
-    }
-
-    public function getBalanceRepository()
-    {
-        if(array_key_exists('balance_repository', $this->data))
-            if(!is_subclass_of($this->data['balance_repository'], Model::class))
-                return resolve($this->data['balance_repository']);
-
-        return resolve($this->balance_repository);
     }
 
     public function getCoinId()

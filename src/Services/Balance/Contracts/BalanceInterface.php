@@ -8,16 +8,22 @@ abstract class BalanceInterface
 {
     protected $data;
 
+    protected $balance_repository;
+
+    protected $coin_repository;
+
     public function __construct(array $data)
     {
+        $this->balance_repository = resolve(config('laravelBalance.repositories.balance'));
+
+        $this->coin_repository    = resolve(config('laravelBalance.repositories.coin'));
+
         $this->data = new Validator($data);
     }
 
     public function getTheLastBalanceRecordOfUser()
     {
-        $repository = $this->data->getBalanceRepository();
-
-        $last_balance_record_of_user = $repository->where([
+        $last_balance_record_of_user = $this->balance_repository->where([
             ['user_id', '=', $this->data->getUserId()],
             ['coin_id', '=', $this->data->getCoinId()],
         ])->orderBy('id', 'desc')->first();
@@ -27,11 +33,9 @@ abstract class BalanceInterface
 
     public function increaseUserAsset(array $data)
     {
-        $repository = $this->data->getBalanceRepository();
+        $last_balance_record_of_user = $this->balance_repository->store($data);
 
-        $last_balance_record_of_user = $repository->store([
-            ''
-        ]);
+
     }
 
     abstract public function handle();
