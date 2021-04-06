@@ -39,7 +39,7 @@ class Deposit extends BalanceInterface
 
         $updated_asset = $this->storeUserBalance($data);
 
-        return $updated_asset;
+        return $updated_asset ? true : false;
     }
 
 
