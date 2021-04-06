@@ -20,9 +20,9 @@ class CancelOrder extends BalanceInterface
      */
     public function handle()
     {
-        $balance_action_liability = $this->data->getCancelOrderPrice(); // E(n)
+        $balance_action_liability = $this->data->getCancelOrderPrice();                 // E(n)
 
-        $balance_liability =  $this->getTheLastBalanceRecordOfUser();   //  F(n-1)
+        $balance_liability =  $this->getTheLastBalanceRecordOfUser();                   //  F(n-1)
 
         $this->checkIfActionLiabilityIsLowerThanLiability($balance_action_liability, $balance_liability->balance_liability);
 
