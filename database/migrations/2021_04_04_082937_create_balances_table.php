@@ -20,10 +20,11 @@ class CreateBalancesTable extends Migration
             $table->unsignedBigInteger('actionable_id');
             $table->char('actionable_type');
 
-            $table->float('balance_action_asset');
-            $table->float('balance_asset');            // total balance
-            $table->float('balance_action_liability'); // blocked balance
-            $table->float('balance_equity');           // free balance
+            $table->float('balance_action_asset', 8);
+            $table->float('balance_asset', 8);            // total balance
+            $table->float('balance_action_liability', 8);
+            $table->float('balance_liability', 8);        // blocked balance
+            $table->float('balance_equity', 8);           // free balance
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

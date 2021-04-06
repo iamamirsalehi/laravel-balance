@@ -54,4 +54,17 @@ class Validator
 
         return $this->data['deposit_price'];
     }
+
+    public function getCancelOrderPrice()
+    {
+        if(!array_key_exists('cancel_order', $this->data))
+            throw new DepositPriceMustBeExistedException('[cancel_order] key must be existed in the data');
+
+        if(!is_int($this->data['cancel_order']))
+            throw new IdMustBeIntegerException('cancel order price must be an integer');
+
+        if($this->data['cancel_order'] > 0)
+            throw new PriceMustBeValidException('The cancel order price must be negative');
+        return $this->data['cancel_order'];
+    }
 }

@@ -23,7 +23,7 @@ class Deposit extends BalanceInterface
 
         $d =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        $asset = $c + $d->balance_asset;              // D(n)
+        $asset = $c + $d?->balance_asset;              // D(n)
 
         $data = [
             'balance_code'             => CodeGenerator::make(),
@@ -31,8 +31,9 @@ class Deposit extends BalanceInterface
             'actionable_type'          => 'deposit',
             'balance_action_asset'     => $c,
             'balance_asset'            => $asset,
-            'balance_action_liability' => $d->balance_action_liability,
-            'balance_equity'           => $d->balance_equity,
+            'balance_action_liability' => $d->balance_action_liability ?? 0,
+            'balance_liability'        => $d->balance_liability ?? 0,
+            'balance_equity'           => $d->balance_equity ?? 0,
             'user_id'                  => $this->data->getUserId(),
             'coin_id'                  => $this->data->getCoinId(),
         ];
