@@ -8,7 +8,7 @@ class CodeGenerator
 {
     public static function make()
     {
-        $number = mt_rand(10000, 99999);
+        $number = mt_rand(100000, 999999);
 
         return $number;
     }
