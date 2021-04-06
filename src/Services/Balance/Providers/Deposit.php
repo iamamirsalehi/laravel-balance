@@ -41,6 +41,4 @@ class Deposit extends BalanceInterface
 
         return $updated_asset ? true : false;
     }
-
-
 }

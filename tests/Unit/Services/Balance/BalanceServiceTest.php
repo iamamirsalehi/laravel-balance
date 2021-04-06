@@ -4,16 +4,16 @@
 namespace Iamamirsalehi\LaravelBalance\tests\Unit\Services\Balance;
 
 
-use Iamamirsalehi\LaravelBalance\Exceptions\ActionNotFoundException;
 use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ActionNotFoundException;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\CancelOrder;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\Deposit;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\ExecuteOrder;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\PendingOrder;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\RejectedWithraw;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\WithdrawConfirmed;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\WithdrawUnconfirmedYet;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
-use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\Deposit;
 
 class BalanceServiceTest extends TestCase
 {
@@ -46,7 +46,7 @@ class BalanceServiceTest extends TestCase
 
         $dummyAction  = BalanceService::dummyAction();
 
-        $error_message = ucfirst($dummyAction. ' action not found, please call an existing action');
+        $error_message = ucfirst($dummyAction . ' action not found, please call an existing action');
 
         $this->expectExceptionMessage($error_message);
     }

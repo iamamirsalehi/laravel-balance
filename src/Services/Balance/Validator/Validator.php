@@ -1,14 +1,14 @@
 <?php
 
 
-namespace Iamamirsalehi\LaravelBalance\src\Services\Balance\Validator;
+namespace Iamamirsalehi\LaravelBalance\Services\Balance\Validator;
 
 
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\CoinIdMustBeExistedInTheData;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\DepositPriceMustBeExistedException;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\PriceMustBeValidException;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\UserIdMustBeExistedInDataException;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\IdMustBeIntegerException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\CoinIdMustBeExistedInTheData;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\DepositPriceMustBeExistedException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\UserIdMustBeExistedInDataException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\IdMustBeIntegerException;
 
 class Validator
 {

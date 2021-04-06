@@ -2,7 +2,7 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Contracts;
 
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Validator\Validator;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Validator\Validator;
 
 abstract class BalanceInterface
 {

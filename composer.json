@@ -10,7 +10,7 @@
     "autoload": {
         "psr-4": {
             "Iamamirsalehi\\LaravelBalance\\": "src/",
-            "Iamamirsalehi\\LaravelBalance\\Database\\Factories\\": "database/factories"
+            "Iamamirsalehi\\LaravelBalance\\Database\\": "database/"
         }
     },
 
