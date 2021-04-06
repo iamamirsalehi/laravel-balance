@@ -27,7 +27,16 @@
     </testsuite>
   </testsuites>
   <php>
-    <env name="DB_CONNECTION" value="testing"/>
-    <env name="APP_KEY" value="base64:VGUxhj/9CxDVIzTbGQHjImtybPfn7MlDa6VqIFCm9yU="/>
+    <php>
+      <env name="DB_CONNECTION" value="testing"/>
+      <env name="APP_KEY" value="base64:VGUxhj/9CxDVIzTbGQHjImtybPfn7MlDa6VqIFCm9yU="/>
+<!--      <env name="APP_ENV" value="testing"/>-->
+<!--      <env name="DB_CONNECTION" value="sqlite"/>-->
+<!--      <env name="DB_DATABASE" value=":memory:"/>-->
+<!--      <env name="CACHE_DRIVER" value="array"/>-->
+<!--      <env name="SESSION_DRIVER" value="array"/>-->
+<!--      <env name="QUEUE_DRIVER" value="sync"/>-->
+<!--      <env name="MAIL_DRIVER" value="array"/>-->
+    </php>
   </php>
 </phpunit>

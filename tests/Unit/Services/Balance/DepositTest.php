@@ -9,10 +9,11 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidExc
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class DepositTest extends TestCase
 {
-    use RefreshDatabase, WithFaker;
+    use DatabaseMigrations, RefreshDatabase, WithFaker;
 
     public function test_if_user_can_deposit()
     {
@@ -24,8 +25,7 @@ class DepositTest extends TestCase
 
         $deposit = BalanceService::deposit($data)->handle();
 
-        $this->assertIsBool($deposit);
-        $this->assertEquals(true, $deposit);
+        $this->assertIsInt($deposit);
     }
 
     public function test_we_get_exception_if_we_enter_a_lower_price_than_minimum_price()
