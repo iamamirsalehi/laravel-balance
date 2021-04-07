@@ -37,7 +37,7 @@ class CancelOrder extends BalanceInterface
             'actionable_type'          => 'cancel_order',
             'balance_action_asset'     => 0,
             'balance_asset'            => $balance_liability->balance_asset,
-            'balance_action_liability' => $balance_action_liability,
+            'balance_action_liability' => $balance_action_liability * -1,
             'balance_liability'        => $liability,
             'balance_equity'           => $free_balance,
             'user_id'                  => $this->data->getUserId(),

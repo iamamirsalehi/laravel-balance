@@ -66,4 +66,19 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     return $deposit;
   }
+
+  public function withdrawUnconfirmedYet(int $price)
+  {
+      list($user_id, $coin_id) = $this->getCoinAndUserId();;
+
+      $data = [
+        'user_id' => $user_id,
+        'coin_id' => $coin_id,
+        'price'   => $price
+    ];
+
+    $result = BalanceService::withdrawUnconfirmedYet($data)->handle();
+
+    return $result;
+  }
 }

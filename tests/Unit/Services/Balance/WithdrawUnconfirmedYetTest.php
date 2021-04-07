@@ -13,16 +13,10 @@ class WithdrawUnconfirmedYetTest extends TestCase
         $deposit_price = 200000;
 
         $this->deposit($deposit_price);
-        
+
         $withrawl_unconfirmed_yet_price = 100000;
 
-        $data = [
-            'user_id' => $user_id,
-            'coin_id' => $coin_id,
-            'price'   => $withrawl_unconfirmed_yet_price
-        ];
-
-        $result = BalanceService::withdrawUnconfirmedYet($data)->handle();
+        $result = $this->withdrawUnconfirmedYet($withrawl_unconfirmed_yet_price);
 
         $this->assertIsArray($result);
         $this->assertArrayHasKey('balance_code', $result);
