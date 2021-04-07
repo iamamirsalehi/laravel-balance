@@ -15,24 +15,9 @@ class DepositTest extends TestCase
 {
     public function test_if_user_can_deposit()
     {
-        $user_id =  (int) DB::table('users')->updateOrInsert([
-            'mobile' => '09392126508',
-            'password' => 'password',
-            'mobile_verified' => 1,
-        ]);
+        list($user_id, $coin_id) = $this->getCoinAndUserId(); 
 
-        $coin_id =  (int) DB::table('coins')->updateOrInsert([
-            'coin_persian_name' => 'ریال',
-            'coin_english_name' => 'IRR',
-        ]);
-
-        $data = [
-            'user_id' => $user_id,
-            'coin_id' => $coin_id,
-            'price'   => 120000
-        ];
-
-        $deposit = BalanceService::deposit($data)->handle();
+        $deposit = $this->deposit(120000);
 
         $this->assertIsArray($deposit);
         $this->assertArrayHasKey('balance_code', $deposit);
@@ -44,23 +29,13 @@ class DepositTest extends TestCase
         ];
     }
 
-    /**
-     * @depends test_if_user_can_deposit
-     *
-     */
-    public function test_we_get_exception_if_we_enter_a_lower_price_than_minimum_price($data)
+    public function test_we_get_exception_if_we_enter_a_lower_price_than_minimum_price()
     {
         $this->expectException(PriceMustBeValidException::class);
 
         $this->expectExceptionMessage('Deposit price must be more than ' . number_format(config('laravelBalance.minimum_deposit')));
 
-        $data = [
-            'user_id' => $data['user_id'],
-            'coin_id' => $data['coin_id'],
-            'price'   => 213
-        ];
-
-        BalanceService::deposit($data)->handle();
+        $deposit = $this->deposit(213);
     }
 
     public function tearDown(): void

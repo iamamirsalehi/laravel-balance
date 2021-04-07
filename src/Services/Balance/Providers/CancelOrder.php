@@ -3,6 +3,7 @@
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
+use Iamamirsalehi\LaravelBalance\Resources\CancelOrderResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException;
 
@@ -28,6 +29,8 @@ class CancelOrder extends BalanceInterface
 
         $liability = $balance_liability->balance_liability + $balance_action_liability; // F(n)
 
+        $free_balance = $balance_liability->balance_liability + $balance_liability->balance_equity;
+
         $data = [
             'balance_code'             => CodeGenerator::make(),
             'actionable_id'            => 9,
@@ -36,14 +39,14 @@ class CancelOrder extends BalanceInterface
             'balance_asset'            => $balance_liability->balance_asset,
             'balance_action_liability' => $balance_action_liability,
             'balance_liability'        => $liability,
-            'balance_equity'           => $balance_liability->balance_equity,
+            'balance_equity'           => $free_balance,
             'user_id'                  => $this->data->getUserId(),
             'coin_id'                  => $this->data->getCoinId(),
         ];
 
         $canceled_order = $this->storeUserBalance($data);
 
-        return $canceled_order ? ['tracking_code' => $canceled_order->balance_code] : false;
+        return (new CancelOrderResource($canceled_order))->toArray();
     }
 
     private function checkIfActionLiabilityIsLowerThanLiability(int $action_liability, int $liability)

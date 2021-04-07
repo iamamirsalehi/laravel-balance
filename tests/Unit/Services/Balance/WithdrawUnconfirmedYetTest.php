@@ -8,25 +8,12 @@ class WithdrawUnconfirmedYetTest extends TestCase
 {
     public function test_if_we_can_do_withdraw_unconfirmed_yet()
     {
-        $user_id =  (int) DB::table('users')->updateOrInsert([
-            'mobile' => '09392126508',
-            'password' => 'password',
-            'mobile_verified' => 1,
-        ]);
-
-        $coin_id =  (int) DB::table('coins')->updateOrInsert([
-            'coin_persian_name' => 'ریال',
-            'coin_english_name' => 'IRR',
-        ]);
+        list($user_id, $coin_id) = $this->getCoinAndUserId(); 
 
         $deposit_price = 200000;
 
-        BalanceService::deposit([
-            'user_id' => $user_id,
-            'coin_id' => $coin_id,
-            'price'   => $deposit_price,
-        ])->handle();
-
+        $this->deposit($deposit_price);
+        
         $withrawl_unconfirmed_yet_price = 100000;
 
         $data = [
