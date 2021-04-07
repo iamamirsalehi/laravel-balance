@@ -30,7 +30,7 @@ class LaravelBalanceServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../database/seeders/' => database_path('seeders')
-            ], 'seeds');
+            ], 'seeders');
         }
     }
 }

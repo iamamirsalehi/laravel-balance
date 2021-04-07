@@ -2,8 +2,8 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
+use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
-use Iamamirsalehi\LaravelBalance\src\Utilities\CodeGenerator;
 
 class Deposit extends BalanceInterface
 {
@@ -23,9 +23,17 @@ class Deposit extends BalanceInterface
 
         $balance_asset        =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
+        $asset = null;
+        $free_balance = null;
 
-        $free_balance = $asset - $balance_asset->balance_liability;
+        if(!is_null($balance_asset))
+        {
+            $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
+            $free_balance = $asset - $balance_asset->balance_liability;
+        }else{
+            $asset = $balance_action_asset + 0;  // D(n)
+            $free_balance = $asset - 0;
+        }    
 
         $data = [
             'balance_code'             => CodeGenerator::make(),

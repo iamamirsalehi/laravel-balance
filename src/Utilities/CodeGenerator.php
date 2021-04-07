@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Iamamirsalehi\LaravelBalance\src\Utilities;
+namespace Iamamirsalehi\LaravelBalance\Utilities;
 
 
 class CodeGenerator

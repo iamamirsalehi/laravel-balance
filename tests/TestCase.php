@@ -2,6 +2,7 @@
 
 namespace Iamamirsalehi\LaravelBalance\Tests;
 
+use App\Models\User;
 use Iamamirsalehi\LaravelBalance\LaravelBalanceServiceProvider;
 
 class TestCase extends \Orchestra\Testbench\TestCase
@@ -27,6 +28,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
           'database' => 'laravelBalanceTesting',
           'prefix'   => '',
           'username' => 'root',
+          'password' => 'password',
           'host' => '127.0.0.1'
       ]);
   }
