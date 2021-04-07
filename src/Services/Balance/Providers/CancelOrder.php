@@ -2,15 +2,15 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
+use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException;
-use Iamamirsalehi\LaravelBalance\src\Utilities\CodeGenerator;
 
 class CancelOrder extends BalanceInterface
 {
 
     /**
-     * asset formula is F(n)=E(n)+F(n-1)
+     * Liability formula is F(n)=E(n)+F(n-1)
      *
      * E(n) -> the action of liability
      *

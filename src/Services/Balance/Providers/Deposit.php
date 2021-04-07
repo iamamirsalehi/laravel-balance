@@ -3,6 +3,7 @@
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
+use Iamamirsalehi\LaravelBalance\Resources\DepositResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
 class Deposit extends BalanceInterface
@@ -50,6 +51,6 @@ class Deposit extends BalanceInterface
 
         $updated_asset = $this->storeUserBalance($data);
 
-        return $updated_asset ? ['tracking_code' => $updated_asset->balance_code] : false;
+        return (new DepositResource($updated_asset))->toArray();
     }
 }

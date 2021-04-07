@@ -3,9 +3,7 @@
 
 namespace Iamamirsalehi\LaravelBalance\tests\Unit\Services\Balance;
 
-use Iamamirsalehi\LaravelBalance\Models\Balance;
 use Illuminate\Foundation\Testing\WithFaker;
-use Iamamirsalehi\LaravelBalance\Models\User;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -31,13 +29,14 @@ class DepositTest extends TestCase
         $data = [
             'user_id' => $user_id,
             'coin_id' => $coin_id,
-            'deposit_price' => 120000
+            'price'   => 120000
         ];
 
         $deposit = BalanceService::deposit($data)->handle();
 
         $this->assertIsArray($deposit);
-        $this->assertArrayHasKey('tracking_code', $deposit);
+        $this->assertArrayHasKey('balance_code', $deposit);
+        $this->assertIsInt($deposit['balance_code']);
 
         return [
             'user_id' => $user_id,
@@ -58,7 +57,7 @@ class DepositTest extends TestCase
         $data = [
             'user_id' => $data['user_id'],
             'coin_id' => $data['coin_id'],
-            'deposit_price' => 213
+            'price'   => 213
         ];
 
         BalanceService::deposit($data)->handle();
