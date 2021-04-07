@@ -11,6 +11,6 @@ return [
 
     'repositories'     => [
         'coin'    => \Iamamirsalehi\LaravelBalance\Models\Coin::class,
-        'balance' => \Iamamirsalehi\LaravelBalance\Models\Balance::class
+        'balance' => \Iamamirsalehi\LaravelBalance\Models\Balance::class,
     ]
 ];

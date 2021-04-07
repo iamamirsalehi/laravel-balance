@@ -6,8 +6,13 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
 class WithdrawUnconfirmedYet extends BalanceInterface
 {
+    /**
+     * Undocumented function
+     *
+     * @return void
+     */
     public function handle()
     {
-        // TODO: Implement handle() method.
+
     }
 }
