@@ -23,15 +23,29 @@ class WithdrawUnconfirmedYetTest extends TestCase
         $this->assertIsInt($result['balance_code']);
     
 
-        $withrawl_unconfirmed_yet = DB::table('balances')->where('user_id', '=',$user_id)
+        // test in balance table
+        $withdraw_unconfirmed_yet_in_balance_table = DB::table('balances')->where('user_id', '=',$user_id)
                                                          ->where('coin_id', '=', $coin_id)
                                                          ->orderBy('id', 'desc')->first();
 
-        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_action_liability);
-        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_liability);
-        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
-        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
-        $this->assertEquals(0, $withrawl_unconfirmed_yet->balance_action_asset);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_balance_table->balance_action_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_balance_table->balance_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_balance_table->balance_equity);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_balance_table->balance_equity);
+        $this->assertEquals(0, $withdraw_unconfirmed_yet_in_balance_table->balance_action_asset);
+
+
+        // test in withdraw table
+        $withdraw_unconfirmed_yet_in_withdraw_table = DB::table('withdraws')
+                                                        ->where('user_id', '=',$user_id)
+                                                        ->where('coin_id', '=', $coin_id)
+                                                        ->orderBy('id', 'desc')->first();
+
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_withdraw_table->balance_action_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_withdraw_table->balance_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_withdraw_table->balance_equity);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withdraw_unconfirmed_yet_in_withdraw_table->balance_equity);
+        $this->assertEquals(0, $withdraw_unconfirmed_yet_in_withdraw_table->balance_action_asset);
     }
 
     public function tearDown(): void
