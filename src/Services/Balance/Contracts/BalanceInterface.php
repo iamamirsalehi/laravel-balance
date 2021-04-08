@@ -48,11 +48,11 @@ abstract class BalanceInterface
 
     public function storeUserDeposit(array $data)
     {
-        $stored_deposit = $this->deposit_repository->store($data);
+        $stored_deposit = $this->deposit_repository->create($data);
 
-        $stored_deposit->balances()->create();
+        $user_balance =  $stored_deposit->balances()->create($data);
 
-        return $stored_deposit;
+        return $user_balance;
     }
 
     abstract public function handle();

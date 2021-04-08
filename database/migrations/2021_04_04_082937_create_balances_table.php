@@ -17,8 +17,7 @@ class CreateBalancesTable extends Migration
             $table->id();
             $table->char('balance_code', 10);          // tracking code
 
-            $table->unsignedBigInteger('actionable_id');
-            $table->char('actionable_type');
+            $table->morphs('balanceable');
 
             $table->float('balance_action_asset', 8);
             $table->float('balance_asset', 8);            // total balance

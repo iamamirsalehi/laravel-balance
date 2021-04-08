@@ -36,19 +36,6 @@ class Deposit extends BalanceInterface
             $free_balance = $asset - 0;
         }    
 
-        $balance_data = [
-            'balance_code'             => CodeGenerator::make(),
-            'actionable_id'            => 1,
-            'actionable_type'          => 'deposit',
-            'balance_action_asset'     => $balance_action_asset,
-            'balance_asset'            => $asset,
-            'balance_action_liability' => 0,
-            'balance_liability'        => 0,
-            'balance_equity'           => $free_balance,
-            'user_id'                  => $this->data->getUserId(),
-            'coin_id'                  => $this->data->getCoinId(),
-        ];
-
         $deposit_data = [
             'balance_code'             => CodeGenerator::make(),
             'balance_action_asset'     => $balance_action_asset,
@@ -60,10 +47,8 @@ class Deposit extends BalanceInterface
             'coin_id'                  => $this->data->getCoinId(),
         ];
 
-        $this->storeUserDeposit($deposit_data);
+        $user_balance = $this->storeUserDeposit($deposit_data);
 
-        $updated_asset = $this->storeUserBalance($data);
-
-        return (new DepositResource($updated_asset))->toArray();
+        return (new DepositResource($user_balance))->toArray();
     }
 }
