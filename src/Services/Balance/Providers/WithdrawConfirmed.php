@@ -15,10 +15,19 @@ class WithdrawConfirmed extends BalanceInterface
     {
         $unconfirmed_withdraw = $this->getTheLastUnconfirmedUserWithdraw();
 
+        $action_asset = $unconfirmed_withdraw->action_liability * -1;
+
+        $asset = $unconfirmed_withdraw->action_liability - $unconfirmed_withdraw->asset;
+
+        $action_liability = $unconfirmed_withdraw->liability * -1;
+
+        $free_balance = $asset - $unconfirmed_withdraw->liability;
+
         $data = [
-            'balance_is_admin_confirmed'           => $this->withdraw_repository::CONFIRMED,
-            'balance_admin_confirmation_date_time' => Carbon::now(),
-            ''
+            'is_admin_confirmed'           => $this->withdraw_repository::CONFIRMED,
+            'admin_confirmation_date_time' => Carbon::now(),
+            'tracking_code'                => '',
+            'action_asset'                 => '',
         ];
 
         $confirmed_withdraw = $unconfirmed_withdraw->update();
@@ -31,7 +40,7 @@ class WithdrawConfirmed extends BalanceInterface
         return $this->withdraw_repository->where([
             ['user_id', '=', $this->data->getUserId()],
             ['coin_id', '=', $this->data->getCoinId()],
-            ['balance_is_admin_confirmed', '=', 0]
+            ['is_admin_confirmed', '=', 0]
         ])->orderBy('id', 'desc')->first();
     }
 }

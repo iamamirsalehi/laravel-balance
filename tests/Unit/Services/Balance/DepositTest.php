@@ -26,14 +26,14 @@ class DepositTest extends TestCase
                                 ->first();
 
         $this->assertIsArray($deposit);
-        $this->assertArrayHasKey('balance_code', $deposit);
-        $this->assertIsInt($deposit['balance_code']);
-        $this->assertEquals($deposit['balance_code'], $submited_deposit->balance_code);
-        $this->assertEquals($deposit['balance_action_asset'], $submited_deposit->balance_action_asset);
-        $this->assertEquals($deposit['balance_asset'], $submited_deposit->balance_asset);
-        $this->assertEquals($deposit['balance_action_liability'], $submited_deposit->balance_action_liability);
-        $this->assertEquals($deposit['balance_liability'], $submited_deposit->balance_liability);
-        $this->assertEquals($deposit['balance_equity'], $submited_deposit->balance_equity);
+        $this->assertArrayHasKey('tracking_code', $deposit);
+        $this->assertIsInt($deposit['tracking_code']);
+        $this->assertEquals($deposit['tracking_code'], $submited_deposit->tracking_code);
+        $this->assertEquals($deposit['action_asset'], $submited_deposit->action_asset);
+        $this->assertEquals($deposit['asset'], $submited_deposit->asset);
+        $this->assertEquals($deposit['action_liability'], $submited_deposit->action_liability);
+        $this->assertEquals($deposit['liability'], $submited_deposit->liability);
+        $this->assertEquals($deposit['equity'], $submited_deposit->equity);
 
         return [
             'user_id' => $user_id,

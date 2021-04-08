@@ -17,7 +17,7 @@ class CancelOrderTest extends TestCase
 
         $withdraw_unconfirmed_yet = $this->withdrawUnconfirmedYet(100000);
 
-        $cancel_order_price = $withdraw_unconfirmed_yet['balance_action_liability'] * -1;
+        $cancel_order_price = $withdraw_unconfirmed_yet['action_liability'] * -1;
 
         $data = [
             'user_id' => $user_id,
@@ -27,9 +27,9 @@ class CancelOrderTest extends TestCase
 
         $cancel_order = BalanceService::cancelOrder($data)->handle();
 
-        $this->assertEquals($cancel_order_price * -1, $cancel_order['balance_action_liability']);
-        $this->assertEquals($cancel_order['balance_asset'], $cancel_order['balance_equity']);
-        $this->assertEquals(0, $cancel_order['balance_liability']);
+        $this->assertEquals($cancel_order_price * -1, $cancel_order['action_liability']);
+        $this->assertEquals($cancel_order['asset'], $cancel_order['equity']);
+        $this->assertEquals(0.0, $cancel_order['liability']);
     }
 
     public function tearDown(): void

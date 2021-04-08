@@ -26,7 +26,7 @@ class WithdrawConfirmedTest extends TestCase
         $confirmed_withdraw = BalanceService::withdrawConfirmed($data);
 
         $this->assertIsArray($confirmed_withdraw);
-        $this->assertEquals(Withdraw::CONFIRMED, $confirmed_withdraw['balance_is_admin_confirmed']);
+        $this->assertEquals(Withdraw::CONFIRMED, $confirmed_withdraw['is_admin_confirmed']);
     }
 
     public function tearDown(): void

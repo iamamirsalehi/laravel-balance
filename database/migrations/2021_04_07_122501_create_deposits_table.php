@@ -15,13 +15,13 @@ class CreateDepositsTable extends Migration
     {
         Schema::create('deposits', function (Blueprint $table) {
             $table->id();
-            $table->char('balance_code', 10);          // tracking code
+            $table->char('tracking_code', 10);          // tracking code
 
-            $table->float('balance_action_asset', 8);
-            $table->float('balance_asset', 8);            // total balance
-            $table->float('balance_action_liability', 8);
-            $table->float('balance_liability', 8);        // blocked balance
-            $table->float('balance_equity', 8);           // free balance
+            $table->float('action_asset', 8)->unsigned();
+            $table->float('asset', 8);            // total balance
+            $table->float('action_liability', 8)->unsigned();
+            $table->float('liability', 8);        // blocked balance
+            $table->float('equity', 8);           // free balance
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

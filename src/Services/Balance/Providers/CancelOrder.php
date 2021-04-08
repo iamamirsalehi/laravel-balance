@@ -21,25 +21,25 @@ class CancelOrder extends BalanceInterface
      */
     public function handle()
     {
-        $balance_action_liability = $this->data->getCancelOrderPrice();                 // E(n)
+        $action_liability = $this->data->getCancelOrderPrice(); // E(n)
 
-        $balance_liability =  $this->getTheLastBalanceRecordOfUser();                   //  F(n-1)
+        $liability_record =  $this->getTheLastBalanceRecordOfUser();   //  F(n-1)
 
-        $this->checkIfActionLiabilityIsLowerThanLiability($balance_action_liability, $balance_liability->balance_liability);
+        $this->checkIfActionLiabilityIsLowerThanLiability($action_liability, $liability_record->liability);
 
-        $liability = $balance_liability->balance_liability + $balance_action_liability; // F(n)
+        $liability = $liability_record->liability + $action_liability; // F(n)
 
-        $free_balance = $balance_liability->balance_liability + $balance_liability->balance_equity;
+        $free_balance = $liability_record->liability + $liability_record->equity;
 
         $data = [
-            'balance_code'             => CodeGenerator::make(),
-            'balance_action_asset'     => 0,
-            'balance_asset'            => $balance_liability->balance_asset,
-            'balance_action_liability' => $balance_action_liability * -1,
-            'balance_liability'        => $liability,
-            'balance_equity'           => $free_balance,
-            'user_id'                  => $this->data->getUserId(),
-            'coin_id'                  => $this->data->getCoinId(),
+            'tracking_code'    => CodeGenerator::make(),
+            'action_asset'     => 0,
+            'asset'            => $liability_record->asset,
+            'action_liability' => $action_liability * -1,
+            'liability'        => $liability,
+            'equity'           => $free_balance,
+            'user_id'          => $this->data->getUserId(),
+            'coin_id'          => $this->data->getCoinId(),
         ];
 
         $canceled_order = $this->storeUserBalance($data);

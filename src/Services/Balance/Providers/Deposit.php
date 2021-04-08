@@ -20,21 +20,21 @@ class Deposit extends BalanceInterface
      */
     public function handle()
     {
-        $balance_action_asset       = $this->data->getDepositPrice();          // C(n)
+        $action_asset       = $this->data->getDepositPrice();          // C(n)
 
-        $balance_asset              =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
+        $asset              =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($balance_action_asset, $balance_asset);
+        list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($action_asset, $asset);
 
         $deposit_data = [
-            'balance_code'             => CodeGenerator::make(),
-            'balance_action_asset'     => $balance_action_asset,
-            'balance_asset'            => $asset,
-            'balance_action_liability' => 0,
-            'balance_liability'        => 0,
-            'balance_equity'           => $free_balance,
-            'user_id'                  => $this->data->getUserId(),
-            'coin_id'                  => $this->data->getCoinId(),
+            'tracking_code'    => CodeGenerator::make(),
+            'action_asset'     => $action_asset,
+            'asset'            => $asset,
+            'action_liability' => 0,
+            'liability'        => 0,
+            'equity'           => $free_balance,
+            'user_id'          => $this->data->getUserId(),
+            'coin_id'          => $this->data->getCoinId(),
         ];
 
         $user_balance = $this->storeUserDeposit($deposit_data);
@@ -42,18 +42,18 @@ class Deposit extends BalanceInterface
         return (new DepositResource($user_balance))->toArray();
     }
 
-    private function calculateAssetAndFreeBalance(int $balance_action_asset, $balance_asset)
+    private function calculateAssetAndFreeBalance(int $action_asset, $asset)
     {
         $asset = null;
 
         $free_balance = null;
 
-        if(!is_null($balance_asset))
+        if(!is_null($asset))
         {
-            $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
-            $free_balance = $asset - $balance_asset->balance_liability;
+            $asset = $action_asset + $asset->asset;  // D(n)
+            $free_balance = $asset - $asset->liability;
         }else{
-            $asset = $balance_action_asset + 0;  // D(n)
+            $asset = $action_asset + 0;              // D(n)
             $free_balance = $asset - 0;
         }
 

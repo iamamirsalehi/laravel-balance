@@ -21,16 +21,16 @@ class CancelOrderResource
     public function toArray()
     {
         return [
-            'balance_code'             => $this->data->balance_code,
-            'actionable_id'            => $this->data->actionable_id,
-            'actionable_type'          => $this->data->actionable_type,
-            'balance_action_asset'     => $this->data->balance_action_asset,
-            'balance_asset'            => $this->data->balance_asset,
-            'balance_action_liability' => $this->data->balance_action_liability,
-            'balance_liability'        => $this->data->balance_liability,
-            'balance_equity'           => $this->data->balance_equity,
-            'user_id'                  => $this->data->user_id,
-            'coin_id'                  => $this->data->coin_id,
+            'tracking_code'    => $this->data->tracking_code,
+            'actionable_id'    => $this->data->actionable_id,
+            'actionable_type'  => $this->data->actionable_type,
+            'action_asset'     => $this->data->action_asset,
+            'asset'            => $this->data->asset,
+            'action_liability' => $this->data->action_liability,
+            'liability'        => $this->data->liability,
+            'equity'           => $this->data->equity,
+            'user_id'          => $this->data->user_id,
+            'coin_id'          => $this->data->coin_id,
         ];
     }
 }
