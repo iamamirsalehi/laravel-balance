@@ -4,6 +4,7 @@
 namespace Iamamirsalehi\LaravelBalance\tests\Unit\Services\Balance;
 
 
+use Iamamirsalehi\LaravelBalance\Models\Withdraw;
 use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
 
@@ -22,7 +23,10 @@ class WithdrawConfirmedTest extends TestCase
             'coin_id' => $coin_id,
         ];
 
-        $confirmed_withdraw = BalanceService::withdrawConfirmed();
+        $confirmed_withdraw = BalanceService::withdrawConfirmed($data);
+
+        $this->assertIsArray($confirmed_withdraw);
+        $this->assertEquals(Withdraw::CONFIRMED, $confirmed_withdraw['balance_is_admin_confirmed']);
     }
 
     public function tearDown(): void

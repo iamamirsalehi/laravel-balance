@@ -24,7 +24,9 @@ class CreateWithdrawsTable extends Migration
             $table->float('balance_equity', 8);           // free balance
 
             $table->tinyInteger('balance_is_admin_confirmed')->default(0);
+            $table->dateTime('balance_admin_confirmation_date_time')->nullable();
             $table->tinyInteger('balance_is_admin_rejected')->default(0);
+            $table->dateTime('balance_admin_rejection_date_time')->nullable();
             $table->text('balance_is_admin_rejected_description')->nullable();
 
             $table->unsignedBigInteger('user_id');

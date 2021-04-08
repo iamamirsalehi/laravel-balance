@@ -13,6 +13,12 @@ class Withdraw extends Model
 
     protected $guarded = [];
 
+    public const UNCONFIRMED = 0;
+
+    public const CONFIRMED = 1;
+
+    public const REJECTED = 2;
+
     public function balances()
     {
         return $this->morphMany(Balance::class, 'balanceable');
