@@ -15,13 +15,25 @@ class DepositTest extends TestCase
 {
     public function test_if_user_can_deposit()
     {
-        list($user_id, $coin_id) = $this->getCoinAndUserId(); 
+        list($user_id, $coin_id) = $this->getCoinAndUserId();
 
         $deposit = $this->deposit(120000);
+
+        $submited_deposit = DB::table('deposits')
+                                ->where('user_id', '=', $user_id)
+                                ->where('coin_id', '=', $coin_id)
+                                ->orderBy('id', 'desc')
+                                ->first();
 
         $this->assertIsArray($deposit);
         $this->assertArrayHasKey('balance_code', $deposit);
         $this->assertIsInt($deposit['balance_code']);
+        $this->assertEquals($deposit['balance_code'], $submited_deposit->balance_code);
+        $this->assertEquals($deposit['balance_action_asset'], $submited_deposit->balance_action_asset);
+        $this->assertEquals($deposit['balance_asset'], $submited_deposit->balance_asset);
+        $this->assertEquals($deposit['balance_action_liability'], $submited_deposit->balance_action_liability);
+        $this->assertEquals($deposit['balance_liability'], $submited_deposit->balance_liability);
+        $this->assertEquals($deposit['balance_equity'], $submited_deposit->balance_equity);
 
         return [
             'user_id' => $user_id,

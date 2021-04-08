@@ -6,8 +6,13 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 
 class WithdrawConfirmed extends BalanceInterface
 {
+
+    /**
+     *
+     *
+     */
     public function handle()
     {
-        // TODO: Implement handle() method.
+
     }
 }
