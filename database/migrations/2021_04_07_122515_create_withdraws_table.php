@@ -23,6 +23,10 @@ class CreateWithdrawsTable extends Migration
             $table->float('balance_liability', 8);        // blocked balance
             $table->float('balance_equity', 8);           // free balance
 
+            $table->tinyInteger('balance_is_admin_confirmed')->default(0);
+            $table->tinyInteger('balance_is_admin_rejected')->default(0);
+            $table->text('balance_is_admin_rejected_description')->nullable();
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
          
