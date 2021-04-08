@@ -14,9 +14,9 @@ class WithdrawUnconfirmedYetTest extends TestCase
 
         $this->deposit($deposit_price);
 
-        $withrawl_unconfirmed_yet_price = 100000;
+        $withdraw_unconfirmed_yet_price = 100000;
 
-        $result = $this->withdrawUnconfirmedYet($withrawl_unconfirmed_yet_price);
+        $result = $this->withdrawUnconfirmedYet($withdraw_unconfirmed_yet_price);
 
         $this->assertIsArray($result);
         $this->assertArrayHasKey('balance_code', $result);
@@ -27,10 +27,10 @@ class WithdrawUnconfirmedYetTest extends TestCase
                                                          ->where('coin_id', '=', $coin_id)
                                                          ->orderBy('id', 'desc')->first();
 
-        $this->assertEquals($withrawl_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_action_liability);
-        $this->assertEquals($withrawl_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_liability);
-        $this->assertEquals($withrawl_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
-        $this->assertEquals($withrawl_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_action_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_liability);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
+        $this->assertEquals($withdraw_unconfirmed_yet_price, $withrawl_unconfirmed_yet->balance_equity);
         $this->assertEquals(0, $withrawl_unconfirmed_yet->balance_action_asset);
     }
 

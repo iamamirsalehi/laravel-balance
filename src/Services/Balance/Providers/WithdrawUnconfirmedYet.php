@@ -24,6 +24,26 @@ class WithdrawUnconfirmedYet extends BalanceInterface
 
         $asset =  $this->getTheLastBalanceRecordOfUser();                           //  F(n-1)
 
+        list($liability, $free_balance) = $this->calculateLiabilityAndFreeBalance($balance_action_liability, $asset);
+
+        $data = [
+            'balance_code'             => CodeGenerator::make(),
+            'balance_action_asset'     => 0,
+            'balance_asset'            => $asset->balance_asset ?? 0,
+            'balance_action_liability' => $balance_action_liability,
+            'balance_liability'        => $liability,
+            'balance_equity'           => $free_balance,
+            'user_id'                  => $this->data->getUserId(),
+            'coin_id'                  => $this->data->getCoinId(),
+        ];
+
+        $withdraw_unconfirmed_yet = $this->storeWithdrawUnconfirmedYet($data);
+
+        return (new WithdrawUnconfirmedYetResource($withdraw_unconfirmed_yet))->toArray();
+    }
+
+    private function calculateLiabilityAndFreeBalance(int $balance_action_liability, $asset)
+    {
         $liability = null;
 
         $free_balance = null;
@@ -34,26 +54,11 @@ class WithdrawUnconfirmedYet extends BalanceInterface
 
             $free_balance = $asset->balance_asset - $liability;                         // G(n)=D(n)-F(n)
         }else{
-            $liability = 0 + $balance_action_liability;                                
+            $liability = 0 + $balance_action_liability;
 
-            $free_balance = 0 - $liability;                                            
+            $free_balance = 0 - $liability;
         }
 
-        $data = [
-            'balance_code'             => CodeGenerator::make(),
-            'actionable_id'            => 2,
-            'actionable_type'          => 'withdrawl_unconfirmed_yet',
-            'balance_action_asset'     => 0,
-            'balance_asset'            => $asset->balance_asset ?? 0,
-            'balance_action_liability' => $balance_action_liability,
-            'balance_liability'        => $liability,
-            'balance_equity'           => $free_balance,
-            'user_id'                  => $this->data->getUserId(),
-            'coin_id'                  => $this->data->getCoinId(),
-        ];
-
-        $withdrawl_unconfirmed_yet = $this->storeUserBalance($data);
-
-        return (new WithdrawUnconfirmedYetResource($withdrawl_unconfirmed_yet))->toArray();
+        return [$liability, $free_balance];
     }
 }

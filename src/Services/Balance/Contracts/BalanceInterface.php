@@ -55,5 +55,14 @@ abstract class BalanceInterface
         return $user_balance;
     }
 
+    public function storeWithdrawUnconfirmedYet(array $data)
+    {
+        $stored_withdraw = $this->withdraw_repository->create($data);
+
+        $user_withrawl =  $stored_withdraw->balances()->create($data);
+
+        return $user_withrawl;
+    }
+
     abstract public function handle();
 }
