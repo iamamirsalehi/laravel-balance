@@ -33,8 +33,6 @@ class CancelOrder extends BalanceInterface
 
         $data = [
             'balance_code'             => CodeGenerator::make(),
-            'actionable_id'            => 9,
-            'actionable_type'          => 'cancel_order',
             'balance_action_asset'     => 0,
             'balance_asset'            => $balance_liability->balance_asset,
             'balance_action_liability' => $balance_action_liability * -1,
