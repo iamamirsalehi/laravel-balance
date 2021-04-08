@@ -12,4 +12,9 @@ class Deposit extends Model
     protected $table = 'deposits';
 
     protected $guarded = [];
+
+    public function balances()
+    {
+        return $this->morphMany(Balance::class, 'balanceable');
+    }
 }

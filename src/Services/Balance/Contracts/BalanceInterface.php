@@ -12,11 +12,19 @@ abstract class BalanceInterface
 
     protected $coin_repository;
 
+    protected $withdraw_repository;
+
+    protected $deposit_repository;
+
     public function __construct(array $data)
     {
-        $this->balance_repository = resolve(config('laravelBalance.repositories.balance'));
+        $this->balance_repository   = resolve(config('laravelBalance.repositories.balance'));
 
-        $this->coin_repository    = resolve(config('laravelBalance.repositories.coin'));
+        $this->coin_repository      = resolve(config('laravelBalance.repositories.coin'));
+
+        $this->withdraw_repository  = resolve(config('laravelBalance.repositories.withdraw'));
+
+        $this->deposit_repository   = resolve(config('laravelBalance.repositories.deposit'));
 
         $this->data = new Validator($data);
     }
@@ -36,6 +44,15 @@ abstract class BalanceInterface
         $last_balance_record_of_user = $this->balance_repository->create($data);
 
         return $last_balance_record_of_user;
+    }
+
+    public function storeUserDeposit(array $data)
+    {
+        $stored_deposit = $this->deposit_repository->store($data);
+
+        $stored_deposit->balances()->create();
+
+        return $stored_deposit;
     }
 
     abstract public function handle();

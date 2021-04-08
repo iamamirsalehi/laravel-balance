@@ -12,4 +12,9 @@ class Balance extends Model
     protected $table = 'balances';
 
     protected $guarded = [];
+
+    public function balanceable()
+    {
+        return $this->morphTo();
+    }
 }

@@ -12,4 +12,9 @@ class Withdraw extends Model
     protected $table = 'withdraws';
 
     protected $guarded = [];
+
+    public function balances()
+    {
+        return $this->morphMany(Balance::class, 'balanceable');
+    }
 }

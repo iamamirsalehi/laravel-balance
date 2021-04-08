@@ -12,7 +12,7 @@ return [
     'repositories'     => [
         'coin'    => \Iamamirsalehi\LaravelBalance\Models\Coin::class,
         'balance' => \Iamamirsalehi\LaravelBalance\Models\Balance::class,
-        'wihdraw' => \Iamamirsalehi\LaravelBalance\Models\Withdraw::class,
+        'withdraw' => \Iamamirsalehi\LaravelBalance\Models\Withdraw::class,
         'deposit' => \Iamamirsalehi\LaravelBalance\Models\Deposit::class,
     ]
 ];
