@@ -17,11 +17,11 @@ class CreateWithdrawsTable extends Migration
             $table->id();
             $table->char('tracking_code', 10);          // tracking code
 
-            $table->float('action_asset', 8)->unsigned();
-            $table->float('asset', 8);            // total balance
-            $table->float('action_liability', 8)->unsigned();
-            $table->float('liability', 8);        // blocked balance
-            $table->float('equity', 8);           // free balance
+            $table->decimal('action_asset', 20, 20, true);
+            $table->decimal('asset', 20, 20);            // total balance
+            $table->decimal('action_liability', 20, 20, true);
+            $table->decimal('liability', 20, 20);        // blocked balance
+            $table->decimal('equity', 20, 20);           // free balance
 
             $table->tinyInteger('is_admin_confirmed')->default(0);
             $table->dateTime('admin_confirmation_date_time')->nullable();

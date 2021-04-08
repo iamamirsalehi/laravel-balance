@@ -4,6 +4,9 @@ namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 use Carbon\Carbon;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
+use Iamamirsalehi\LaravelBalance\src\Resources\WithdrawConfirmedResource;
+use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ThereIsNoRecordException;
+use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 
 class WithdrawConfirmed extends BalanceInterface
 {
@@ -15,24 +18,48 @@ class WithdrawConfirmed extends BalanceInterface
     {
         $unconfirmed_withdraw = $this->getTheLastUnconfirmedUserWithdraw();
 
-        $action_asset = $unconfirmed_withdraw->action_liability * -1;
+        if(is_null($unconfirmed_withdraw))
+            throw new ThereIsNoRecordException('There is no unconfirmed record to confirm');
 
-        $asset = $unconfirmed_withdraw->action_liability - $unconfirmed_withdraw->asset;
+        $action_asset = $unconfirmed_withdraw->action_liability;
 
-        $action_liability = $unconfirmed_withdraw->liability * -1;
+        $asset = ($unconfirmed_withdraw->action_liability * -1) + $unconfirmed_withdraw->asset;
 
-        $free_balance = $asset - $unconfirmed_withdraw->liability;
+        $action_liability = $unconfirmed_withdraw->liability;
 
-        $data = [
+        $free_balance =  $unconfirmed_withdraw->liability - $asset;
+
+        $liability = $unconfirmed_withdraw->liability - $unconfirmed_withdraw->action_liability;
+
+        $data_confirmed = [
+            'tracking_code'                => CodeGenerator::make(),
+            'action_asset'                 => $action_asset * -1,
+            'asset'                        => $asset,
+            'action_liability'             => $action_liability * -1,
+            'liability'                    => $liability,
+            'equity'                       => $free_balance,
             'is_admin_confirmed'           => $this->withdraw_repository::CONFIRMED,
             'admin_confirmation_date_time' => Carbon::now(),
-            'tracking_code'                => '',
-            'action_asset'                 => '',
+            'user_id'                      => $unconfirmed_withdraw->user_id,
+            'coin_id'                      => $unconfirmed_withdraw->coin_id,
         ];
 
-        $confirmed_withdraw = $unconfirmed_withdraw->update();
+        $data_balance = [
+            'tracking_code'                => CodeGenerator::make(),
+            'action_asset'                 => $action_asset  * -1,
+            'asset'                        => $asset ,
+            'action_liability'             => $action_liability * -1,
+            'liability'                    => $liability,
+            'equity'                       => $free_balance,
+            'user_id'                      => $unconfirmed_withdraw->user_id,
+            'coin_id'                      => $unconfirmed_withdraw->coin_id,
+        ];
 
+        $confirmed_withdraw = $unconfirmed_withdraw->update($data_confirmed);
 
+        $this->storeWithdrawconfirmed($data_balance);
+
+        return (new WithdrawConfirmedResource($confirmed_withdraw))->toArray();
     }
 
     private function getTheLastUnconfirmedUserWithdraw()

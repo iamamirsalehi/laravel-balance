@@ -39,7 +39,7 @@ abstract class BalanceInterface
         return $last_balance_record_of_user;
     }
 
-    public function storeUserBalance(array $data)
+    public function storeUserBalance(array $data, $type = null)
     {
         $last_balance_record_of_user = $this->balance_repository->create($data);
 
@@ -62,6 +62,15 @@ abstract class BalanceInterface
         $user_withrawl =  $stored_withdraw->balances()->create($data);
 
         return $user_withrawl;
+    }
+
+    public function storeWithdrawconfirmed(array $data)
+    {
+        $stored_withdraw = $this->withdraw_repository->create($data);
+
+        $user_withdraw =  $stored_withdraw->balances()->create($data);
+
+        return $user_withdraw;
     }
 
     public function storeCancelOrder(array $data)
