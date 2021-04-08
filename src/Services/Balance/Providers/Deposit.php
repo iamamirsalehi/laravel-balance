@@ -20,21 +20,11 @@ class Deposit extends BalanceInterface
      */
     public function handle()
     {
-        $balance_action_asset = $this->data->getDepositPrice();          // C(n)
+        $balance_action_asset       = $this->data->getDepositPrice();          // C(n)
 
-        $balance_asset        =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
+        $balance_asset              =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        $asset = null;
-        $free_balance = null;
-
-        if(!is_null($balance_asset))
-        {
-            $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
-            $free_balance = $asset - $balance_asset->balance_liability;
-        }else{
-            $asset = $balance_action_asset + 0;  // D(n)
-            $free_balance = $asset - 0;
-        }    
+        list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($balance_action_asset, $balance_asset);
 
         $deposit_data = [
             'balance_code'             => CodeGenerator::make(),
@@ -50,5 +40,23 @@ class Deposit extends BalanceInterface
         $user_balance = $this->storeUserDeposit($deposit_data);
 
         return (new DepositResource($user_balance))->toArray();
+    }
+
+    private function calculateAssetAndFreeBalance(int $balance_action_asset, $balance_asset)
+    {
+        $asset = null;
+
+        $free_balance = null;
+
+        if(!is_null($balance_asset))
+        {
+            $asset = $balance_action_asset + $balance_asset->balance_asset;  // D(n)
+            $free_balance = $asset - $balance_asset->balance_liability;
+        }else{
+            $asset = $balance_action_asset + 0;  // D(n)
+            $free_balance = $asset - 0;
+        }
+
+        return [$asset, $free_balance];
     }
 }
