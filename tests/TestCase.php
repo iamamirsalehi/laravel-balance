@@ -30,7 +30,7 @@ class TestCase extends \Orchestra\Testbench\TestCase
           'database' => 'laravelBalanceTesting',
           'prefix'   => '',
           'username' => 'root',
-          'password' => 'password',
+          'password' => '',
           'host' => '127.0.0.1'
       ]);
   }
