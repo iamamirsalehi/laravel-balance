@@ -81,4 +81,12 @@ class TestCase extends \Orchestra\Testbench\TestCase
 
     return $result;
   }
+
+  public function truncate()
+  {
+      DB::table('balances')->truncate();
+      DB::table('withdraws')->truncate();
+      DB::table('deposits')->truncate();
+  }
+
 }

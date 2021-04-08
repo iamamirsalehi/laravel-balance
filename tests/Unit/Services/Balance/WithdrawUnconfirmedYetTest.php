@@ -50,7 +50,7 @@ class WithdrawUnconfirmedYetTest extends TestCase
 
     public function tearDown(): void
     {
-        DB::table('balances')->truncate();
+        $this->truncate();
 
         parent::tearDown();
     }
