@@ -31,7 +31,7 @@ class Deposit extends BalanceInterface
             'action_asset' => $action_asset,
             'asset' => $asset,
             'action_liability' => $user_last_balance->action_liability ?? 0,
-            'liability' =>  $user_last_balance->liability ?? 0,
+            'liability' => $user_last_balance->liability ?? 0,
             'equity' => $free_balance ?? 0,
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
@@ -49,7 +49,7 @@ class Deposit extends BalanceInterface
 
         if (!is_null($asset)) {
             $finial_asset = $action_asset + $asset->asset;  // D(n)
-            $free_balance = $finial_asset - (int) $asset->liability;
+            $free_balance = $finial_asset - (int)$asset->liability;
         } else {
             $finial_asset = $action_asset + 0;              // D(n)
             $free_balance = $action_asset;

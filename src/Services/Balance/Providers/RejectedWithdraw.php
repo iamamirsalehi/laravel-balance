@@ -48,7 +48,7 @@ class RejectedWithdraw extends BalanceInterface
 
         $rejected_withdraw = $unconfirmed_withdraw->update($rejected_withdraw_data);
 
-        if(!$rejected_withdraw)
+        if (!$rejected_withdraw)
             throw new ServerException('Something went wrong, Please try again');
 
         $result = $unconfirmed_withdraw->balances()->create($balance_data);

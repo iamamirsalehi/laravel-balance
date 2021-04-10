@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Iamamirsalehi\LaravelBalance\Resources\WithdrawConfirmedResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ServerException;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ThereIsNoRecordException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ThereIsNoRecordException;
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 
 class WithdrawConfirmed extends BalanceInterface
@@ -30,9 +30,9 @@ class WithdrawConfirmed extends BalanceInterface
 
         $asset = $action_asset + $unconfirmed_withdraw->asset;
 
-        $free_balance = $unconfirmed_withdraw->asset -  $unconfirmed_withdraw->liability;
+        $free_balance = $unconfirmed_withdraw->asset - $unconfirmed_withdraw->liability;
 
-        $tracking_code = (int) $unconfirmed_withdraw->tracking_code;
+        $tracking_code = (int)$unconfirmed_withdraw->tracking_code;
 
         $data_confirmed = [
             'tracking_code' => $tracking_code,
@@ -60,7 +60,7 @@ class WithdrawConfirmed extends BalanceInterface
 
         $confirmed_withdraw = $unconfirmed_withdraw->update($data_confirmed);
 
-        if(!$confirmed_withdraw)
+        if (!$confirmed_withdraw)
             throw new ServerException('Something went wrong, Please try again');
         $result = $unconfirmed_withdraw->balances()->create($data_balance);
 
