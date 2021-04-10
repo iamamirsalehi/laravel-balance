@@ -5,6 +5,7 @@ namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 use Carbon\Carbon;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\src\Resources\WithdrawConfirmedResource;
+use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ServerException;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ThereIsNoRecordException;
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 
@@ -59,6 +60,8 @@ class WithdrawConfirmed extends BalanceInterface
 
         $confirmed_withdraw = $unconfirmed_withdraw->update($data_confirmed);
 
+        if(!$confirmed_withdraw)
+            throw new ServerException('Something went wrong, Please try again');
         $result = $unconfirmed_withdraw->balances()->create($data_balance);
 
         $result->is_admin_confirmed = $this->withdraw_repository::CONFIRMED;
