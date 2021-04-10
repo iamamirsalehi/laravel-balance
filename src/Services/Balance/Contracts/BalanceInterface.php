@@ -67,7 +67,7 @@ abstract class BalanceInterface
     public function storeWithdrawconfirmed(array $data)
     {
         $stored_withdraw = $this->withdraw_repository->create($data);
-
+        dd($stored_withdraw->balances);
         $user_withdraw =  $stored_withdraw->balances()->create($data);
 
         return $user_withdraw;

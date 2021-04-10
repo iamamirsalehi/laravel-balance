@@ -21,23 +21,23 @@ class WithdrawConfirmed extends BalanceInterface
         if (is_null($unconfirmed_withdraw))
             throw new ThereIsNoRecordException('There is no unconfirmed record to confirm');
 
-        $action_asset = $unconfirmed_withdraw->action_liability;
+        $action_liability = $unconfirmed_withdraw->liability * -1;
 
-        $asset = ($unconfirmed_withdraw->action_liability * -1) + $unconfirmed_withdraw->asset;
-
-        $action_liability = $unconfirmed_withdraw->liability;
-
-        $free_balance = $unconfirmed_withdraw->liability - $asset;
+        $action_asset = $action_liability;
 
         $liability = $unconfirmed_withdraw->liability - $unconfirmed_withdraw->action_liability;
+
+        $asset = $action_asset + $unconfirmed_withdraw->asset;
+
+        $free_balance = $unconfirmed_withdraw->asset -  $unconfirmed_withdraw->liability;
 
         $tracking_code = $unconfirmed_withdraw->tracking_code;
 
         $data_confirmed = [
             'tracking_code' => $tracking_code,
-            'action_asset' => $action_asset * -1,
+            'action_asset' => $action_asset,
             'asset' => $asset,
-            'action_liability' => $action_liability * -1,
+            'action_liability' => $action_liability,
             'liability' => $liability,
             'equity' => $free_balance,
             'is_admin_confirmed' => $this->withdraw_repository::CONFIRMED,
@@ -48,9 +48,9 @@ class WithdrawConfirmed extends BalanceInterface
 
         $data_balance = [
             'tracking_code' => $tracking_code,
-            'action_asset' => $action_asset * -1,
+            'action_asset' => $action_asset,
             'asset' => $asset,
-            'action_liability' => $action_liability * -1,
+            'action_liability' => $action_liability,
             'liability' => $liability,
             'equity' => $free_balance,
             'user_id' => $unconfirmed_withdraw->user_id,
@@ -59,9 +59,11 @@ class WithdrawConfirmed extends BalanceInterface
 
         $confirmed_withdraw = $unconfirmed_withdraw->update($data_confirmed);
 
-        $this->storeWithdrawconfirmed($data_balance);
+        $result = $unconfirmed_withdraw->balances()->create($data_balance);
 
-        return (new WithdrawConfirmedResource($unconfirmed_withdraw))->toArray();
+        $result->is_admin_confirmed = $this->withdraw_repository::CONFIRMED;
+
+        return (new WithdrawConfirmedResource($result))->toArray();
     }
 
     private function getTheLastUnconfirmedUserWithdraw()
