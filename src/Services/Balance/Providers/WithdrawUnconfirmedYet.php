@@ -11,13 +11,11 @@ use Iamamirsalehi\LaravelBalance\Resources\WithdrawUnconfirmedYetResource;
 class WithdrawUnconfirmedYet extends BalanceInterface
 {
     /**
-     * formula is F(n)=E(n)+F(n-1)
-     *
-     * E(n) -> the action of liability
-     *
-     * F(n-1) -> the last liability of the user
-     *
-     * F(n) -> the actual liability
+     * this method is called When user wants to withdraw from his balance
+     * @return array
+     * @throws PriceMustBeValidException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException
      */
     public function handle()
     {
@@ -46,6 +44,12 @@ class WithdrawUnconfirmedYet extends BalanceInterface
         return (new WithdrawUnconfirmedYetResource($withdraw_unconfirmed_yet))->toArray();
     }
 
+    /**
+     * this method calculates the liability and free balance of user
+     * @param int $action_liability
+     * @param $asset
+     * @return array
+     */
     private function calculateLiabilityAndFreeBalance(int $action_liability, $asset)
     {
         $liability = null;
