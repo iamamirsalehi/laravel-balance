@@ -22,17 +22,17 @@ class Deposit extends BalanceInterface
     {
         $action_asset = $this->data->getDepositPrice();          // C(n)
 
-        $asset = $this->getTheLastBalanceRecordOfUser(); // D(n-1)
+        $user_last_balance = $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
-        list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($action_asset, $asset);
+        list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($action_asset, $user_last_balance);
 
         $deposit_data = [
             'tracking_code' => CodeGenerator::make(),
             'action_asset' => $action_asset,
             'asset' => $asset,
-            'action_liability' => 0,
-            'liability' => 0,
-            'equity' => $free_balance,
+            'action_liability' => $user_last_balance->action_liability ?? 0,
+            'liability' =>  $user_last_balance->liability ?? 0,
+            'equity' => $free_balance ?? 0,
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
         ];
@@ -44,18 +44,17 @@ class Deposit extends BalanceInterface
 
     private function calculateAssetAndFreeBalance(int $action_asset, $asset)
     {
-        $asset = null;
-
+        $finial_asset = null;
         $free_balance = null;
 
         if (!is_null($asset)) {
-            $asset = $action_asset + $asset->asset;  // D(n)
-            $free_balance = $asset - $asset->liability;
+            $finial_asset = $action_asset + $asset->asset;  // D(n)
+            $free_balance = $finial_asset - (int) $asset->liability;
         } else {
-            $asset = $action_asset + 0;              // D(n)
-            $free_balance = $asset - 0;
+            $finial_asset = $action_asset + 0;              // D(n)
+            $free_balance = $action_asset;
         }
 
-        return [$asset, $free_balance];
+        return [$finial_asset, $free_balance];
     }
 }

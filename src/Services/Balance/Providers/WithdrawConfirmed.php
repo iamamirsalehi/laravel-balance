@@ -5,7 +5,7 @@ namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 use Carbon\Carbon;
 use Iamamirsalehi\LaravelBalance\Resources\WithdrawConfirmedResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
-use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ServerException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ServerException;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ThereIsNoRecordException;
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 

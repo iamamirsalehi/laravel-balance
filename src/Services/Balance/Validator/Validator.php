@@ -78,4 +78,24 @@ class Validator
 
         return $this->data['price'];
     }
+
+    public function getWithdrawId()
+    {
+        if (!array_key_exists('withdraw_id', $this->data))
+            throw new DepositPriceMustBeExistedException('[withdraw_id] key must be existed in the data');
+
+        if (!is_int($this->data['withdraw_id']))
+            throw new IdMustBeIntegerException('withdraw_id must be an integer');
+
+        return $this->data['withdraw_id'];
+    }
+
+    public function getIsAdminRejectedDescription()
+    {
+        if(isset($this->data['is_admin_rejected_description']) and !empty($this->data['is_admin_rejected_description']))
+            return $this->data['is_admin_rejected_description'];
+
+        return null;
+    }
+
 }
