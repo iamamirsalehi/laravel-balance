@@ -23,7 +23,7 @@ class CancelOrder extends BalanceInterface
     {
         $action_liability = $this->data->getCancelOrderPrice(); // E(n)
 
-        $liability_record =  $this->getTheLastBalanceRecordOfUser();   //  F(n-1)
+        $liability_record = $this->getTheLastBalanceRecordOfUser();   //  F(n-1)
 
         $this->checkIfActionLiabilityIsLowerThanLiability($action_liability, $liability_record->liability);
 
@@ -32,14 +32,14 @@ class CancelOrder extends BalanceInterface
         $free_balance = $liability_record->liability + $liability_record->equity;
 
         $data = [
-            'tracking_code'    => CodeGenerator::make(),
-            'action_asset'     => 0,
-            'asset'            => $liability_record->asset,
+            'tracking_code' => CodeGenerator::make(),
+            'action_asset' => 0,
+            'asset' => $liability_record->asset,
             'action_liability' => $action_liability * -1,
-            'liability'        => $liability,
-            'equity'           => $free_balance,
-            'user_id'          => $this->data->getUserId(),
-            'coin_id'          => $this->data->getCoinId(),
+            'liability' => $liability,
+            'equity' => $free_balance,
+            'user_id' => $this->data->getUserId(),
+            'coin_id' => $this->data->getCoinId(),
         ];
 
         $canceled_order = $this->storeUserBalance($data);
@@ -51,7 +51,7 @@ class CancelOrder extends BalanceInterface
     {
         $action_liability = $action_liability * -1;
 
-        if($action_liability > $liability)
+        if ($action_liability > $liability)
             throw new PriceMustBeValidException('The action liability is bigger than liability');
     }
 }

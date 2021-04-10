@@ -10,7 +10,7 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\CancelOrder;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\Deposit;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\ExecuteOrder;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\PendingOrder;
-use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\RejectedWithraw;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\RejectedWithdraw;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\WithdrawConfirmed;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Providers\WithdrawUnconfirmedYet;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
@@ -23,19 +23,19 @@ class BalanceServiceTest extends TestCase
             'test'
         ];
 
-        $deposit                = BalanceService::deposit($data);
-        $cancelOrder            = BalanceService::cancelOrder($data);
-        $executeOrder           = BalanceService::executeOrder($data);
-        $pendingOrder           = BalanceService::pendingOrder($data);
-        $rejectedOrder          = BalanceService::rejectedWithraw($data);
-        $withdrawConfirmed      = BalanceService::withdrawConfirmed($data);
+        $deposit = BalanceService::deposit($data);
+        $cancelOrder = BalanceService::cancelOrder($data);
+        $executeOrder = BalanceService::executeOrder($data);
+        $pendingOrder = BalanceService::pendingOrder($data);
+        $rejectedOrder = BalanceService::rejectedWithraw($data);
+        $withdrawConfirmed = BalanceService::withdrawConfirmed($data);
         $withdrawUnconfirmedYet = BalanceService::withdrawUnconfirmedYet($data);
 
         $this->assertInstanceOf(Deposit::class, $deposit);
         $this->assertInstanceOf(CancelOrder::class, $cancelOrder);
         $this->assertInstanceOf(ExecuteOrder::class, $executeOrder);
         $this->assertInstanceOf(PendingOrder::class, $pendingOrder);
-        $this->assertInstanceOf(RejectedWithraw::class, $rejectedOrder);
+        $this->assertInstanceOf(RejectedWithdraw::class, $rejectedOrder);
         $this->assertInstanceOf(WithdrawConfirmed::class, $withdrawConfirmed);
         $this->assertInstanceOf(WithdrawUnconfirmedYet::class, $withdrawUnconfirmedYet);
     }
@@ -44,7 +44,7 @@ class BalanceServiceTest extends TestCase
     {
         $this->expectException(ActionNotFoundException::class);
 
-        $dummyAction  = BalanceService::dummyAction();
+        $dummyAction = BalanceService::dummyAction();
 
         $error_message = ucfirst($dummyAction . ' action not found, please call an existing action');
 

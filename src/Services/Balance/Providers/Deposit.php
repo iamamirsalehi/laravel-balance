@@ -20,21 +20,21 @@ class Deposit extends BalanceInterface
      */
     public function handle()
     {
-        $action_asset       = $this->data->getDepositPrice();          // C(n)
+        $action_asset = $this->data->getDepositPrice();          // C(n)
 
-        $asset              =  $this->getTheLastBalanceRecordOfUser(); // D(n-1)
+        $asset = $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
         list($asset, $free_balance) = $this->calculateAssetAndFreeBalance($action_asset, $asset);
 
         $deposit_data = [
-            'tracking_code'    => CodeGenerator::make(),
-            'action_asset'     => $action_asset,
-            'asset'            => $asset,
+            'tracking_code' => CodeGenerator::make(),
+            'action_asset' => $action_asset,
+            'asset' => $asset,
             'action_liability' => 0,
-            'liability'        => 0,
-            'equity'           => $free_balance,
-            'user_id'          => $this->data->getUserId(),
-            'coin_id'          => $this->data->getCoinId(),
+            'liability' => 0,
+            'equity' => $free_balance,
+            'user_id' => $this->data->getUserId(),
+            'coin_id' => $this->data->getCoinId(),
         ];
 
         $user_balance = $this->storeUserDeposit($deposit_data);
@@ -48,11 +48,10 @@ class Deposit extends BalanceInterface
 
         $free_balance = null;
 
-        if(!is_null($asset))
-        {
+        if (!is_null($asset)) {
             $asset = $action_asset + $asset->asset;  // D(n)
             $free_balance = $asset - $asset->liability;
-        }else{
+        } else {
             $asset = $action_asset + 0;              // D(n)
             $free_balance = $asset - 0;
         }

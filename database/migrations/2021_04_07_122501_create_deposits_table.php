@@ -17,11 +17,11 @@ class CreateDepositsTable extends Migration
             $table->id();
             $table->char('tracking_code', 10);          // tracking code
 
-            $table->decimal('action_asset', 20, 20, true);
-            $table->decimal('asset', 20, 20);            // total balance
-            $table->decimal('action_liability', 20, 20, true);
-            $table->decimal('liability', 20, 20);        // blocked balance
-            $table->decimal('equity', 20, 20);           // free balance
+            $table->decimal('action_asset', 18, 9);
+            $table->decimal('asset', 18, 9);            // total balance
+            $table->decimal('action_liability', 18, 9);
+            $table->decimal('liability', 18, 9);        // blocked balance
+            $table->decimal('equity', 18, 9);           // free balance
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

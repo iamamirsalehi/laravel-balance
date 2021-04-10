@@ -11,7 +11,7 @@ class CancelOrderTest extends TestCase
 
     public function test_if_we_can_cancel_an_order()
     {
-        list($user_id, $coin_id) = $this->getCoinAndUserId(); 
+        list($user_id, $coin_id) = $this->getCoinAndUserId();
 
         $deposit = $this->deposit(200000);
 
@@ -22,7 +22,7 @@ class CancelOrderTest extends TestCase
         $data = [
             'user_id' => $user_id,
             'coin_id' => $coin_id,
-            'price'   => $cancel_order_price
+            'price' => $cancel_order_price
         ];
 
         $cancel_order = BalanceService::cancelOrder($data)->handle();

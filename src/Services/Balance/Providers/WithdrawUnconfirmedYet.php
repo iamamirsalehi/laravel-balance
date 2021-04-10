@@ -19,22 +19,22 @@ class WithdrawUnconfirmedYet extends BalanceInterface
      * F(n) -> the actual liability
      */
     public function handle()
-    {        
+    {
         $action_liability = $this->data->getWithdrawUnconfirmedYetPrice();  // E(n)
 
-        $asset =  $this->getTheLastBalanceRecordOfUser();                   //  F(n-1)
+        $asset = $this->getTheLastBalanceRecordOfUser();                   //  F(n-1)
 
         list($liability, $free_balance) = $this->calculateLiabilityAndFreeBalance($action_liability, $asset);
 
         $data = [
-            'tracking_code'    => CodeGenerator::make(),
-            'action_asset'     => 0,
-            'asset'            => $asset->asset ?? 0,
+            'tracking_code' => CodeGenerator::make(),
+            'action_asset' => 0,
+            'asset' => $asset->asset ?? 0,
             'action_liability' => $action_liability,
-            'liability'        => $liability,
-            'equity'           => $free_balance,
-            'user_id'          => $this->data->getUserId(),
-            'coin_id'          => $this->data->getCoinId(),
+            'liability' => $liability,
+            'equity' => $free_balance,
+            'user_id' => $this->data->getUserId(),
+            'coin_id' => $this->data->getCoinId(),
         ];
 
         $withdraw_unconfirmed_yet = $this->storeWithdrawUnconfirmedYet($data);
@@ -48,12 +48,11 @@ class WithdrawUnconfirmedYet extends BalanceInterface
 
         $free_balance = null;
 
-        if(!is_null($asset))
-        {
+        if (!is_null($asset)) {
             $liability = $asset->liability + $action_liability;         // F(n)
 
             $free_balance = $asset->asset - $liability;                 // G(n)=D(n)-F(n)
-        }else{
+        } else {
             $liability = 0 + $action_liability;
 
             $free_balance = 0 - $liability;

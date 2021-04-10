@@ -20,10 +20,10 @@ class DepositTest extends TestCase
         $deposit = $this->deposit(120000);
 
         $submited_deposit = DB::table('deposits')
-                                ->where('user_id', '=', $user_id)
-                                ->where('coin_id', '=', $coin_id)
-                                ->orderBy('id', 'desc')
-                                ->first();
+            ->where('user_id', '=', $user_id)
+            ->where('coin_id', '=', $coin_id)
+            ->orderBy('id', 'desc')
+            ->first();
 
         $this->assertIsArray($deposit);
         $this->assertArrayHasKey('tracking_code', $deposit);
