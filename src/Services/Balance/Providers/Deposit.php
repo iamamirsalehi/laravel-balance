@@ -9,18 +9,16 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 class Deposit extends BalanceInterface
 {
     /**
-     * asset formula is D(n)=C(n)+D(n-1)
+     * When user deposits this method is called
      *
-     * C(n) -> the input (price) that increase the value of asset straightly
-     *
-     * D(n-1) -> the last user asset that had
-     *
-     * D(n) -> the current asset of user
-     *
+     * @return array
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException
      */
     public function handle()
     {
-        $action_asset = $this->data->getDepositPrice();          // C(n)
+        $action_asset = $this->data->getDepositPrice();              // C(n)
 
         $user_last_balance = $this->getTheLastBalanceRecordOfUser(); // D(n-1)
 
@@ -42,6 +40,12 @@ class Deposit extends BalanceInterface
         return (new DepositResource($user_balance))->toArray();
     }
 
+    /**
+     * this method calculates the asset and free balance amount for deposit
+     * @param int $action_asset
+     * @param $asset
+     * @return array
+     */
     private function calculateAssetAndFreeBalance(int $action_asset, $asset)
     {
         $finial_asset = null;
