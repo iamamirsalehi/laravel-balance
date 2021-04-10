@@ -10,6 +10,13 @@ use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ServerException;
 
 class RejectedWithdraw extends BalanceInterface
 {
+    /**
+     * this method is called When user withdraw request is rejected by action
+     * @return array
+     * @throws ServerException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException
+     */
     public function handle()
     {
         $unconfirmed_withdraw = $this->getUserUnconfirmedWithdraw();
@@ -59,6 +66,12 @@ class RejectedWithdraw extends BalanceInterface
         return (new RejectedWithdrawResource($result))->toArray();
     }
 
+    /**
+     * The unconfirmed user withdraw
+     * @return mixed
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException
+     */
     private function getUserUnconfirmedWithdraw()
     {
         return $this->withdraw_repository->where([
