@@ -14,19 +14,32 @@ class WithdrawConfirmedTest extends TestCase
     {
         list($user_id, $coin_id) = $this->getCoinAndUserId();
 
-        $deposit = $this->deposit(200000);
+        BalanceService::deposit([
+            'user_id' => 1,
+            'coin_id' => 1,
+            'price' => 300000
+        ])->handle();
 
-        $unconfirmed_withdraw = $this->withdrawUnconfirmedYet(-100000);
+        BalanceService::withdrawUnconfirmedyet([
+            'user_id' => 1,
+            'coin_id' => 1,
+            'price' => 200000
+        ])->handle();
 
         $data = [
             'user_id' => $user_id,
             'coin_id' => $coin_id,
         ];
 
-        $confirmed_withdraw = BalanceService::withdrawConfirmed($data);
+        $confirmed_withdraw = BalanceService::withdrawConfirmed($data)->handle();
 
         $this->assertIsArray($confirmed_withdraw);
         $this->assertEquals(Withdraw::CONFIRMED, $confirmed_withdraw['is_admin_confirmed']);
+        $this->assertEquals(100000, $confirmed_withdraw['equity']);
+        $this->assertEquals(-200000, $confirmed_withdraw['action_asset']);
+        $this->assertEquals(100000, $confirmed_withdraw['asset']);
+        $this->assertEquals(-200000, $confirmed_withdraw['action_liability']);
+        $this->assertEquals(0, $confirmed_withdraw['liability']);
     }
 
     public function tearDown(): void

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace Iamamirsalehi\LaravelBalance\src\Resources;
+namespace Iamamirsalehi\LaravelBalance\Resources;
 
 
 class WithdrawConfirmedResource

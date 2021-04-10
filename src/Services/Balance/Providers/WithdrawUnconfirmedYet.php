@@ -2,6 +2,7 @@
 
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException;
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Resources\DepositResource as DepositResource;
@@ -22,7 +23,10 @@ class WithdrawUnconfirmedYet extends BalanceInterface
     {
         $action_liability = $this->data->getWithdrawUnconfirmedYetPrice();  // E(n)
 
+        if($action_liability < 0)
+            throw new PriceMustBeValidException('Price must not be a negative number');
         $asset = $this->getTheLastBalanceRecordOfUser();                   //  F(n-1)
+
 
         list($liability, $free_balance) = $this->calculateLiabilityAndFreeBalance($action_liability, $asset);
 

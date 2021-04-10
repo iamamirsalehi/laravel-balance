@@ -27,7 +27,7 @@ class BalanceServiceTest extends TestCase
         $cancelOrder = BalanceService::cancelOrder($data);
         $executeOrder = BalanceService::executeOrder($data);
         $pendingOrder = BalanceService::pendingOrder($data);
-        $rejectedOrder = BalanceService::rejectedWithraw($data);
+        $rejectedOrder = BalanceService::rejectedWithdraw($data);
         $withdrawConfirmed = BalanceService::withdrawConfirmed($data);
         $withdrawUnconfirmedYet = BalanceService::withdrawUnconfirmedYet($data);
 

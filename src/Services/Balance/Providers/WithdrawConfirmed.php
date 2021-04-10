@@ -3,8 +3,8 @@
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 use Carbon\Carbon;
+use Iamamirsalehi\LaravelBalance\Resources\WithdrawConfirmedResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
-use Iamamirsalehi\LaravelBalance\src\Resources\WithdrawConfirmedResource;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ServerException;
 use Iamamirsalehi\LaravelBalance\src\Services\Balance\Exceptions\ThereIsNoRecordException;
 use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
@@ -32,7 +32,7 @@ class WithdrawConfirmed extends BalanceInterface
 
         $free_balance = $unconfirmed_withdraw->asset -  $unconfirmed_withdraw->liability;
 
-        $tracking_code = $unconfirmed_withdraw->tracking_code;
+        $tracking_code = (int) $unconfirmed_withdraw->tracking_code;
 
         $data_confirmed = [
             'tracking_code' => $tracking_code,
