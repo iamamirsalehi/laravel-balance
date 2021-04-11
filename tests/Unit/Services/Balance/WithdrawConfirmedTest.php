@@ -7,6 +7,7 @@ namespace Iamamirsalehi\LaravelBalance\tests\Unit\Services\Balance;
 use Iamamirsalehi\LaravelBalance\Models\Withdraw;
 use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
+use Illuminate\Support\Facades\DB;
 
 class WithdrawConfirmedTest extends TestCase
 {
@@ -15,20 +16,27 @@ class WithdrawConfirmedTest extends TestCase
         list($user_id, $coin_id) = $this->getCoinAndUserId();
 
         BalanceService::deposit([
-            'user_id' => 1,
-            'coin_id' => 1,
+            'user_id' => $user_id,
+            'coin_id' => $coin_id,
             'price' => 300000
         ])->handle();
 
         BalanceService::withdrawUnconfirmedyet([
-            'user_id' => 1,
-            'coin_id' => 1,
+            'user_id' => $user_id,
+            'coin_id' => $coin_id,
             'price' => 200000
         ])->handle();
+
+        $withdraw_unconfrimed_yet = DB::table('withdraws')
+            ->where('user_id', '=', $user_id)
+            ->where('coin_id', '=', $coin_id)
+            ->orderBy('id', 'desc')
+            ->first();
 
         $data = [
             'user_id' => $user_id,
             'coin_id' => $coin_id,
+            'withdraw_id' => $withdraw_unconfrimed_yet->id
         ];
 
         $confirmed_withdraw = BalanceService::withdrawConfirmed($data)->handle();

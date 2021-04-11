@@ -74,7 +74,8 @@ class WithdrawConfirmed extends BalanceInterface
         return $this->withdraw_repository->where([
             ['user_id', '=', $this->data->getUserId()],
             ['coin_id', '=', $this->data->getCoinId()],
+            ['id', '=', $this->data->getWithdrawId()],
             ['is_admin_confirmed', '=', 0]
-        ])->orderBy('id', 'desc')->first();
+        ])->first();
     }
 }
