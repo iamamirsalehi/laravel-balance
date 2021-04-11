@@ -18,13 +18,13 @@ abstract class BalanceInterface
 
     public function __construct(array $data)
     {
-        $this->balance_repository   = resolve(config('laravelBalance.repositories.balance'));
+        $this->balance_repository = resolve(config('laravelBalance.repositories.balance'));
 
-        $this->coin_repository      = resolve(config('laravelBalance.repositories.coin'));
+        $this->coin_repository = resolve(config('laravelBalance.repositories.coin'));
 
-        $this->withdraw_repository  = resolve(config('laravelBalance.repositories.withdraw'));
+        $this->withdraw_repository = resolve(config('laravelBalance.repositories.withdraw'));
 
-        $this->deposit_repository   = resolve(config('laravelBalance.repositories.deposit'));
+        $this->deposit_repository = resolve(config('laravelBalance.repositories.deposit'));
 
         $this->data = new Validator($data);
     }
@@ -50,7 +50,7 @@ abstract class BalanceInterface
     {
         $stored_deposit = $this->deposit_repository->create($data);
 
-        $user_balance =  $stored_deposit->balances()->create($data);
+        $user_balance = $stored_deposit->balances()->create($data);
 
         return $user_balance;
     }
@@ -59,7 +59,7 @@ abstract class BalanceInterface
     {
         $stored_withdraw = $this->withdraw_repository->create($data);
 
-        $user_withrawl =  $stored_withdraw->balances()->create($data);
+        $user_withrawl = $stored_withdraw->balances()->create($data);
 
         return $user_withrawl;
     }
@@ -68,7 +68,7 @@ abstract class BalanceInterface
     {
         $stored_withdraw = $this->withdraw_repository->create($data);
 
-        $user_withdraw =  $stored_withdraw->balances()->create($data);
+        $user_withdraw = $stored_withdraw->balances()->create($data);
 
         return $user_withdraw;
     }
@@ -77,7 +77,7 @@ abstract class BalanceInterface
     {
         $stored_withdraw = $this->withdraw_repository->create($data);
 
-        $user_withrawl =  $stored_withdraw->balances()->create($data);
+        $user_withrawl = $stored_withdraw->balances()->create($data);
 
         return $user_withrawl;
     }
