@@ -1,6 +1,5 @@
 <?php
 
-use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 

@@ -5,7 +5,6 @@ namespace Iamamirsalehi\LaravelBalance\tests\Unit\Services\Balance;
 
 
 use Iamamirsalehi\LaravelBalance\Services\Balance\BalanceService;
-use Iamamirsalehi\LaravelBalance\src\Facades\Balance;
 use Iamamirsalehi\LaravelBalance\Tests\TestCase;
 use Illuminate\Support\Facades\DB;
 
