@@ -12,8 +12,10 @@ use Iamamirsalehi\LaravelBalance\Utilities\CodeGenerator;
 class WithdrawConfirmed extends BalanceInterface
 {
     /**
-     *
-     *
+     * this method is called whenever we want to confirm an unconfirmed withdraw
+     * @return array
+     * @throws ServerException
+     * @throws ThereIsNoRecordException
      */
     public function handle()
     {
@@ -69,6 +71,11 @@ class WithdrawConfirmed extends BalanceInterface
         return (new WithdrawConfirmedResource($result))->toArray();
     }
 
+    /**
+     * @return mixed
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException
+     * @throws \Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException
+     */
     private function getTheLastUnconfirmedUserWithdraw()
     {
         return $this->withdraw_repository->where([
