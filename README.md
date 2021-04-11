@@ -17,6 +17,14 @@ php artisan migrate
 
 ## note: all methods are called statically
 
+### Tasks to do
+- [x] Deposit
+- [x] Withdraw unconfirmed yet
+- [x] Withdraw confirmed
+- [x] Rejected withdraw
+- [ ] pend order
+- [ ] execute order
+- [x] cancel order
 ### How to deposit for user?
 
 ```php
