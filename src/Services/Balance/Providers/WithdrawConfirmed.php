@@ -3,6 +3,7 @@
 namespace Iamamirsalehi\LaravelBalance\Services\Balance\Providers;
 
 use Carbon\Carbon;
+use Iamamirsalehi\LaravelBalance\Models\Withdraw;
 use Iamamirsalehi\LaravelBalance\Resources\WithdrawConfirmedResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ServerException;
@@ -23,6 +24,9 @@ class WithdrawConfirmed extends BalanceInterface
 
         if (is_null($unconfirmed_withdraw))
             throw new ThereIsNoRecordException('There is no unconfirmed record to confirm');
+
+        if($unconfirmed_withdraw->is_admin_rejected == Withdraw::REJECTED)
+            throw new ThereIsNoRecordException('This withdraw is already rejected');
 
         $action_liability = $unconfirmed_withdraw->liability * -1;
 
