@@ -22,13 +22,7 @@ class RejectedWithdraw extends BalanceInterface
     {
         $unconfirmed_withdraw = $this->getUserUnconfirmedWithdraw();
 
-
-        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::CONFIRMED)
-            throw new ThereIsNoRecordException('Requested withdraw is already confirmed');
-
-        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::REJECTED)
-            throw new ThereIsNoRecordException('Requested withdraw is already rejected');
-
+        $this->checkWithdrawIsRejectedOrConfirmed($unconfirmed_withdraw);
 
         $action_liability = $unconfirmed_withdraw->action_liability * -1;
 
@@ -88,5 +82,18 @@ class RejectedWithdraw extends BalanceInterface
             ['coin_id', '=', $this->data->getCoinId()],
             ['id', '=', $this->data->getWithdrawId()]
         ])->first();
+    }
+
+    /**
+     * @param $unconfirmed_withdraw
+     * @throws ThereIsNoRecordException
+     */
+    private function checkWithdrawIsRejectedOrConfirmed($unconfirmed_withdraw)
+    {
+        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::CONFIRMED)
+            throw new ThereIsNoRecordException('Requested withdraw is already confirmed');
+
+        if($unconfirmed_withdraw->is_admin_rejected == Withdraw::REJECTED)
+            throw new ThereIsNoRecordException('Requested withdraw is already rejected');
     }
 }
