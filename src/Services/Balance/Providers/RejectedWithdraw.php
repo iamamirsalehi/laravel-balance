@@ -90,10 +90,13 @@ class RejectedWithdraw extends BalanceInterface
      */
     private function checkWithdrawIsRejectedOrConfirmed($unconfirmed_withdraw)
     {
-        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::CONFIRMED)
-            throw new ThereIsNoRecordException('Requested withdraw is already confirmed');
-
         if($unconfirmed_withdraw->is_admin_rejected == Withdraw::REJECTED)
             throw new ThereIsNoRecordException('Requested withdraw is already rejected');
+
+        if($unconfirmed_withdraw->is_admin_rejected == Withdraw::REJECTED and $unconfirmed_withdraw->is_admin_confirmed != Withdraw::CONFIRMED)
+            throw new ThereIsNoRecordException('Requested withdraw is already rejected');
+
+        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::CONFIRMED)
+            throw new ThereIsNoRecordException('Requested withdraw is already confirmed');
     }
 }
