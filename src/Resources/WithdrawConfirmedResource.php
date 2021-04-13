@@ -28,9 +28,9 @@ class WithdrawConfirmedResource
             'action_asset' => $this->data->action_asset,
             'asset' => $this->data->asset,
             'action_liability' => $this->data->action_liability,
-            'is_admin_confirmed' => $this->data->is_admin_confirmed,
             'liability' => $this->data->liability,
             'equity' => $this->data->equity,
+            'is_admin_confirmed' => $this->data->is_admin_confirmed,
             'user_id' => $this->data->user_id,
             'coin_id' => $this->data->coin_id,
         ];
