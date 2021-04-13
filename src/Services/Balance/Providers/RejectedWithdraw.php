@@ -7,6 +7,7 @@ use Iamamirsalehi\LaravelBalance\Models\Withdraw;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Contracts\BalanceInterface;
 use Iamamirsalehi\LaravelBalance\Resources\RejectedWithdrawResource;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ServerException;
+use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\ThereIsNoRecordException;
 
 class RejectedWithdraw extends BalanceInterface
 {
@@ -20,6 +21,9 @@ class RejectedWithdraw extends BalanceInterface
     public function handle()
     {
         $unconfirmed_withdraw = $this->getUserUnconfirmedWithdraw();
+        
+        if($unconfirmed_withdraw->is_admin_confirmed == Withdraw::CONFIRMED)
+            throw new ThereIsNoRecordException('Requested withdraw is already confirmed');
 
         $action_liability = $unconfirmed_withdraw->action_liability * -1;
 
