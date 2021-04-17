@@ -27,6 +27,13 @@ class LaravelBalanceServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/seeders/' => database_path('seeders')
             ], 'seeders');
+
+            $this->publishes([
+                __DIR__.'/Models/Balance.php/' => app_path('Models'),
+                __DIR__.'/Models/Coin.php/' => app_path('Models'),
+                __DIR__.'/Models/Deposit.php/' => app_path('Models'),
+                __DIR__.'/Models/Withdraw.php/' => app_path('Models'),
+            ], 'Models');
         }
     }
 }
