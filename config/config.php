@@ -14,5 +14,6 @@ return [
         'balance' => \Iamamirsalehi\LaravelBalance\Models\Balance::class,
         'withdraw' => \Iamamirsalehi\LaravelBalance\Models\Withdraw::class,
         'deposit' => \Iamamirsalehi\LaravelBalance\Models\Deposit::class,
+        'user' => \App\Models\User::class,
     ]
 ];

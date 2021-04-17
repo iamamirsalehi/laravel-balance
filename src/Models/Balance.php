@@ -17,4 +17,9 @@ class Balance extends Model
     {
         return $this->morphTo();
     }
+
+    public function user()
+    {
+        return $this->belongsTo(config('repositories.user'));
+    }
 }
