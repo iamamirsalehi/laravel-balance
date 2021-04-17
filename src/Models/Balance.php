@@ -2,6 +2,7 @@
 
 namespace Iamamirsalehi\LaravelBalance\Models;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -20,6 +21,6 @@ class Balance extends Model
 
     public function user()
     {
-        return $this->belongsTo(resolve(config('repositories.user')));
+        return $this->belongsTo(User::class);
     }
 }
