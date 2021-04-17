@@ -20,6 +20,6 @@ class Balance extends Model
 
     public function user()
     {
-        return $this->belongsTo(config('repositories.user'));
+        return $this->belongsTo(resolve(config('repositories.user')));
     }
 }
