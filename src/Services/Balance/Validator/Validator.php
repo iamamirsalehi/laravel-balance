@@ -6,6 +6,7 @@ namespace Iamamirsalehi\LaravelBalance\Services\Balance\Validator;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\MustBeExistedException;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\NumberMustBeIntegerException;
 use Iamamirsalehi\LaravelBalance\Services\Balance\Exceptions\PriceMustBeValidException;
+use Illuminate\Support\Facades\DB;
 
 class Validator
 {
@@ -54,11 +55,13 @@ class Validator
     {
         $this->checkIfKeyExistsAndIsInteger('price');
 
-        if ($this->data['price'] < config('laravelBalance.minimum_deposit'))
-            throw new PriceMustBeValidException('Deposit price must be more than ' . number_format(config('laravelBalance.minimum_deposit')));
+        $last_balance_setting = DB::table('balance_settings')->latest();
 
-        if ($this->data['price'] > config('laravelBalance.maximum_deposit'))
-            throw new PriceMustBeValidException('Deposit price must be lower than ' . number_format(config('laravelBalance.maximum_deposit')));
+        if ($this->data['price'] < $last_balance_setting->min_deposit)
+            throw new PriceMustBeValidException('Deposit price must be more than ' . number_format($last_balance_setting->min_deposit));
+
+        if ($this->data['price'] > $last_balance_setting->max_deposit)
+            throw new PriceMustBeValidException('Deposit price must be lower than ' . number_format($last_balance_setting->max_deposit));
 
         return $this->data['price'];
     }
