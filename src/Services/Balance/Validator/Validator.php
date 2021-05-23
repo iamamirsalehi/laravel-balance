@@ -49,19 +49,10 @@ class Validator
      * @return mixed
      * @throws MustBeExistedException
      * @throws NumberMustBeIntegerException
-     * @throws PriceMustBeValidException
      */
     public function getDepositPrice()
     {
         $this->checkIfKeyExistsAndIsInteger('price');
-
-        $last_balance_setting = DB::table('balance_settings')->latest('id')->first();
-
-        if ($this->data['price'] < $last_balance_setting->min_deposit)
-            throw new PriceMustBeValidException('Deposit price must be more than ' . number_format($last_balance_setting->min_deposit));
-
-        if ($this->data['price'] > $last_balance_setting->max_deposit)
-            throw new PriceMustBeValidException('Deposit price must be lower than ' . number_format($last_balance_setting->max_deposit));
 
         return $this->data['price'];
     }
