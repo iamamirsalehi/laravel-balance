@@ -133,7 +133,7 @@ class Validator
         if (!array_key_exists($key, $this->data))
             throw new MustBeExistedException('[' . $key . '] key must be existed in the data');
 
-        if (is_numeric($this->data[$key]))
+        if (!is_numeric($this->data[$key]))
             throw new NumberMustBeIntegerException($key . ' must be an integer');
     }
 
