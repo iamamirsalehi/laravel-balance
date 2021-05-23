@@ -116,7 +116,7 @@ class Validator
      */
     public function getIsAdminRejectedDescription()
     {
-        if(isset($this->data['is_admin_rejected_description']) and !empty($this->data['is_admin_rejected_description']))
+        if (isset($this->data['is_admin_rejected_description']) and !empty($this->data['is_admin_rejected_description']))
             return $this->data['is_admin_rejected_description'];
 
         return null;
@@ -133,7 +133,7 @@ class Validator
         if (!array_key_exists($key, $this->data))
             throw new MustBeExistedException('[' . $key . '] key must be existed in the data');
 
-        if (!is_int($this->data[$key]))
+        if (!is_float($this->data[$key]) or !is_int($this->data[$key]))
             throw new NumberMustBeIntegerException($key . ' must be an integer');
     }
 
