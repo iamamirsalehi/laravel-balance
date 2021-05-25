@@ -28,9 +28,9 @@ class Deposit extends BalanceInterface
             'tracking_code' => CodeGenerator::make(),
             'action_asset' => floatval($action_asset),
             'asset' => floatval($asset),
-            'action_liability' => floatval($user_last_balance->action_liability) ?? 0,
-            'liability' => floatval($user_last_balance->liability) ?? 0,
-            'equity' => floatval($free_balance) ?? 0,
+            'action_liability' => !is_null($user_last_balance->action_liability) ? floatval($user_last_balance->action_liability) : 0,
+            'liability' => !is_null($user_last_balance->liability) ? floatval($user_last_balance->liability) : 0,
+            'equity' => !is_null($free_balance) ? floatval($free_balance) : 0,
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
         ];
