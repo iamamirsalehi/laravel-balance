@@ -26,11 +26,11 @@ class Deposit extends BalanceInterface
 
         $deposit_data = [
             'tracking_code' => CodeGenerator::make(),
-            'action_asset' => $action_asset,
-            'asset' => $asset,
-            'action_liability' => $user_last_balance->action_liability ?? 0,
-            'liability' => $user_last_balance->liability ?? 0,
-            'equity' => $free_balance ?? 0,
+            'action_asset' => floatval($action_asset),
+            'asset' => floatval($asset),
+            'action_liability' => floatval($user_last_balance->action_liability) ?? 0,
+            'liability' => floatval($user_last_balance->liability) ?? 0,
+            'equity' => floatval($free_balance) ?? 0,
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
         ];
@@ -42,21 +42,20 @@ class Deposit extends BalanceInterface
 
     /**
      * this method calculates the asset and free balance amount for deposit
-     * @param int $action_asset
      * @param $asset
      * @return array
      */
-    private function calculateAssetAndFreeBalance(int $action_asset, $asset)
+    private function calculateAssetAndFreeBalance(int|float $action_asset, $asset)
     {
         $finial_asset = null;
         $free_balance = null;
 
         if (!is_null($asset)) {
-            $finial_asset = $action_asset + $asset->asset;  // D(n)
+            $finial_asset = floatval($action_asset + $asset->asset);  // D(n)
             $free_balance = $finial_asset - floatval($asset->liability);
         } else {
-            $finial_asset = $action_asset + 0;              // D(n)
-            $free_balance = $action_asset;
+            $finial_asset = floatval($action_asset) + 0;              // D(n)
+            $free_balance = floatval($action_asset);
         }
 
         return [$finial_asset, $free_balance];

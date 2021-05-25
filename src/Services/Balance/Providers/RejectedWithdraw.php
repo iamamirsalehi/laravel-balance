@@ -24,19 +24,19 @@ class RejectedWithdraw extends BalanceInterface
 
         $this->checkWithdrawIsRejectedOrConfirmed($unconfirmed_withdraw);
 
-        $action_liability = $unconfirmed_withdraw->action_liability * -1;
+        $action_liability = floatval($unconfirmed_withdraw->action_liability * -1);
 
         $liability = 0;
 
-        $free_balance = $unconfirmed_withdraw->asset - $liability;
+        $free_balance = floatval($unconfirmed_withdraw->asset - $liability);
 
         $rejected_withdraw_data = [
             'tracking_code' => $unconfirmed_withdraw->tracking_code,
-            'action_asset' => $unconfirmed_withdraw->action_asset,
-            'asset' => $unconfirmed_withdraw->asset,
-            'action_liability' => $action_liability,
-            'liability' => $liability,
-            'equity' => $free_balance,
+            'action_asset' => floatval($unconfirmed_withdraw->action_asset),
+            'asset' => floatval($unconfirmed_withdraw->asset),
+            'action_liability' => floatval($action_liability),
+            'liability' => floatval($liability),
+            'equity' => floatval($free_balance),
             'is_admin_confirmed' => Withdraw::UNCONFIRMED,
             'is_admin_rejected' => Withdraw::REJECTED,
             'admin_rejection_date_time' => Carbon::now(),
@@ -47,11 +47,11 @@ class RejectedWithdraw extends BalanceInterface
 
         $balance_data = [
             'tracking_code' => $unconfirmed_withdraw->tracking_code,
-            'action_asset' => $unconfirmed_withdraw->action_asset,
-            'asset' => $unconfirmed_withdraw->asset,
-            'action_liability' => $action_liability,
-            'liability' => $liability,
-            'equity' => $free_balance,
+            'action_asset' => floatval($unconfirmed_withdraw->action_asset),
+            'asset' => floatval($unconfirmed_withdraw->asset),
+            'action_liability' => floatval($action_liability),
+            'liability' => floatval($liability),
+            'equity' => floatval($free_balance),
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
         ];

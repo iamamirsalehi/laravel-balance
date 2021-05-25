@@ -32,9 +32,9 @@ class WithdrawUnconfirmedYet extends BalanceInterface
             'tracking_code' => CodeGenerator::make(),
             'action_asset' => 0,
             'asset' => floatval($asset->asset) ?? 0,
-            'action_liability' => $action_liability,
-            'liability' => $liability,
-            'equity' => $free_balance,
+            'action_liability' => floatval($action_liability),
+            'liability' => floatval($liability),
+            'equity' => floatval($free_balance),
             'user_id' => $this->data->getUserId(),
             'coin_id' => $this->data->getCoinId(),
         ];
@@ -46,24 +46,23 @@ class WithdrawUnconfirmedYet extends BalanceInterface
 
     /**
      * this method calculates the liability and free balance of user
-     * @param int $action_liability
      * @param $asset
      * @return array
      */
-    private function calculateLiabilityAndFreeBalance(int $action_liability, $asset)
+    private function calculateLiabilityAndFreeBalance(int|float $action_liability, $asset)
     {
         $liability = null;
 
         $free_balance = null;
 
         if (!is_null($asset)) {
-            $liability = $asset->liability + $action_liability;         // F(n)
+            $liability = floatval($asset->liability + $action_liability);         // F(n)
 
-            $free_balance = $asset->asset - $liability;                 // G(n)=D(n)-F(n)
+            $free_balance = floatval($asset->asset) - $liability;                 // G(n)=D(n)-F(n)
         } else {
-            $liability = 0 + $action_liability;
+            $liability = 0 + floatval($action_liability);
 
-            $free_balance = 0 - $liability;
+            $free_balance = 0 - floatval($liability);
         }
 
         return [$liability, $free_balance];

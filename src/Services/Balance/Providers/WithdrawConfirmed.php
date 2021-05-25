@@ -28,25 +28,25 @@ class WithdrawConfirmed extends BalanceInterface
         if($unconfirmed_withdraw->is_admin_rejected == Withdraw::REJECTED)
             throw new ThereIsNoRecordException('This withdraw is already rejected');
 
-        $action_liability = $unconfirmed_withdraw->liability * -1;
+        $action_liability = floatval($unconfirmed_withdraw->liability) * -1;
 
-        $action_asset = $action_liability;
+        $action_asset = floatval($action_liability);
 
-        $liability = $unconfirmed_withdraw->liability - $unconfirmed_withdraw->action_liability;
+        $liability = floatval($unconfirmed_withdraw->liability - $unconfirmed_withdraw->action_liability);
 
-        $asset = $action_asset + $unconfirmed_withdraw->asset;
+        $asset = floatval($action_asset + $unconfirmed_withdraw->asset);
 
-        $free_balance = $unconfirmed_withdraw->asset - $unconfirmed_withdraw->liability;
+        $free_balance = floatval($unconfirmed_withdraw->asset - $unconfirmed_withdraw->liability);
 
         $tracking_code = (int)$unconfirmed_withdraw->tracking_code;
 
         $data_confirmed = [
             'tracking_code' => $tracking_code,
-            'action_asset' => $action_asset,
-            'asset' => $asset,
-            'action_liability' => $action_liability,
-            'liability' => $liability,
-            'equity' => $free_balance,
+            'action_asset' => floatval($action_asset),
+            'asset' => floatval($asset),
+            'action_liability' => floatval($action_liability),
+            'liability' => floatval($liability),
+            'equity' => floatval($free_balance),
             'is_admin_confirmed' => $this->withdraw_repository::CONFIRMED,
             'admin_confirmation_date_time' => Carbon::now(),
             'user_id' => $unconfirmed_withdraw->user_id,
@@ -55,11 +55,11 @@ class WithdrawConfirmed extends BalanceInterface
 
         $data_balance = [
             'tracking_code' => $tracking_code,
-            'action_asset' => $action_asset,
-            'asset' => $asset,
-            'action_liability' => $action_liability,
-            'liability' => $liability,
-            'equity' => $free_balance,
+            'action_asset' => floatval($action_asset),
+            'asset' => floatval($asset),
+            'action_liability' => floatval($action_liability),
+            'liability' => floatval($liability),
+            'equity' => floatval($free_balance),
             'user_id' => $unconfirmed_withdraw->user_id,
             'coin_id' => $unconfirmed_withdraw->coin_id,
         ];
