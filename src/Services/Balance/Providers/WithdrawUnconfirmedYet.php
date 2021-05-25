@@ -31,7 +31,7 @@ class WithdrawUnconfirmedYet extends BalanceInterface
         $data = [
             'tracking_code' => CodeGenerator::make(),
             'action_asset' => 0,
-            'asset' => !is_null($asset->asset) ? floatval($asset->asset) : 0,
+            'asset' => !is_null($asset?->asset) ? floatval($asset->asset) : 0,
             'action_liability' => floatval($action_liability),
             'liability' => floatval($liability),
             'equity' => floatval($free_balance),
