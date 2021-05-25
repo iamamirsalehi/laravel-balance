@@ -22,6 +22,7 @@ class WithdrawConfirmedResource
     public function toArray()
     {
         return [
+            'id' => $this->data->id,
             'tracking_code' => $this->data->tracking_code,
             'balanceable_id' => $this->data->balanceable_id,
             'balanceable_type' => $this->data->balanceable_type,

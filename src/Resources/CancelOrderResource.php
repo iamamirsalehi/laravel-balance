@@ -22,6 +22,7 @@ class CancelOrderResource
     public function toArray()
     {
         return [
+            'id' => $this->data->id,
             'tracking_code' => $this->data->tracking_code,
             'actionable_id' => $this->data->actionable_id,
             'actionable_type' => $this->data->actionable_type,
