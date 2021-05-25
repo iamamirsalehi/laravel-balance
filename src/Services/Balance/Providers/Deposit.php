@@ -53,7 +53,7 @@ class Deposit extends BalanceInterface
 
         if (!is_null($asset)) {
             $finial_asset = $action_asset + $asset->asset;  // D(n)
-            $free_balance = $finial_asset - (int)$asset->liability;
+            $free_balance = $finial_asset - floatval($asset->liability);
         } else {
             $finial_asset = $action_asset + 0;              // D(n)
             $free_balance = $action_asset;

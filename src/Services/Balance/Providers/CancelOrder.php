@@ -47,7 +47,7 @@ class CancelOrder extends BalanceInterface
         return (new CancelOrderResource($canceled_order))->toArray();
     }
 
-    private function checkIfActionLiabilityIsLowerThanLiability(int $action_liability, int $liability)
+    private function checkIfActionLiabilityIsLowerThanLiability($action_liability, $liability)
     {
         $action_liability = $action_liability * -1;
 
