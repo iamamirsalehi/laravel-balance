@@ -22,6 +22,7 @@ class CreateWithdrawsTable extends Migration
             $table->decimal('action_liability', 18, 9);
             $table->decimal('liability', 18, 9);        // blocked balance
             $table->decimal('equity', 18, 9);           // free balance
+            $table->decimal('fee', 18, 9)->nullable();
 
             $table->tinyInteger('is_admin_confirmed')->default(0);
             $table->dateTime('admin_confirmation_date_time')->nullable();
